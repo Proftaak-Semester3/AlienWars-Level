@@ -1,12 +1,13 @@
 package com.martens.game.desktop.states;
 
+import Bullet.Bullet;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.martens.game.desktop.FlappyDemo;
-import com.martens.game.desktop.Sprites.Bird;
-import com.martens.game.desktop.Sprites.Player;
-import com.martens.game.desktop.Sprites.Tube;
+import com.martens.game.desktop.Objects.Bird;
+import com.martens.game.desktop.Objects.Player;
 
 import java.util.ArrayList;
 
@@ -18,22 +19,17 @@ public class PlayState  extends State{
     private Player player2;
     private Texture bg;
 
-    float Object1X = FlappyDemo.WIDTH / 20;
-    float Object1Y = FlappyDemo.HEIGHT / 20;
-
-    float Object2X = FlappyDemo.WIDTH - (FlappyDemo.WIDTH / 20);
-    float Object2Y = FlappyDemo.HEIGHT / 20;
-
-    private ArrayList<Tube> tubes;
+    private ArrayList<Bullet> bullets;
 
 
     protected PlayState(GameStateManager gsm) {
         super(gsm);
         bird = new Bird(50 ,200);
-        player1 = new Player("Bird.png");
-        player2 = new Player("Ornstein.jpg");
+        player1 = new Player("Bird.png", FlappyDemo.WIDTH / 20, FlappyDemo.HEIGHT / 20);
+        player2 = new Player("Ornstein.jpg", FlappyDemo.WIDTH - (FlappyDemo.WIDTH / 20), FlappyDemo.HEIGHT / 20);
         cam.setToOrtho(false, FlappyDemo.WIDTH /2, FlappyDemo.HEIGHT /2);
         bg = new Texture("melkweg.jpg");
+        bullets = new ArrayList<>();
 
 
     }
@@ -42,7 +38,9 @@ public class PlayState  extends State{
     protected void handleInput() {
         if(Gdx.input.justTouched())
         {
-            bird.jump();
+            if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                bullets.add(new Bullet(0, 2, Gdx.input.getX(), Gdx.input.getY()));
+            }
         }
 
     }
@@ -50,7 +48,7 @@ public class PlayState  extends State{
     @Override
     public void update(float dt) {
         handleInput();
-        //bird.update(dt);
+
         cam.position.x = bird.getPosition().x + 80;
 
         cam.update();
@@ -62,8 +60,8 @@ public class PlayState  extends State{
         sb.begin();
 
         sb.draw(bg, 0, 0, FlappyDemo.WIDTH, FlappyDemo.HEIGHT);
-        sb.draw(player1.getTexture(),Object1X, Object1Y, 40, 40);
-        sb.draw(player2.getTexture(),Object2X, Object2Y, 40, 40);
+        sb.draw(player1.getTexture(), player1.getXPosition(), player2.getYPosition(), 40, 40);
+        sb.draw(player2.getTexture(), player2.getXPosition(), player2.getYPosition(), 40, 40);
 
 
         sb.end();

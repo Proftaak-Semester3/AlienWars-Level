@@ -1,11 +1,8 @@
-package com.martens.game.desktop.Sprites;
+package com.martens.game.desktop.Objects;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import org.w3c.dom.Text;
-import org.w3c.dom.css.Rect;
 
 import java.util.Random;
 

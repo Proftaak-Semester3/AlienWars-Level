@@ -1,6 +1,5 @@
-package com.martens.game.desktop.Sprites;
+package com.martens.game.desktop.Objects;
 
-import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 
