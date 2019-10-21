@@ -8,8 +8,8 @@ import com.martens.game.desktop.states.GameStateManager;
 import com.martens.game.desktop.states.MenuState;
 
 public class FlappyDemo extends ApplicationAdapter {
-    public static final int WIDTH = 400;
-    public static final int HEIGHT = 600;
+    public static final int WIDTH = 1900;
+    public static final int HEIGHT = 1080;
 
     public static final String TITLE = "test";
     private GameStateManager gsm;
