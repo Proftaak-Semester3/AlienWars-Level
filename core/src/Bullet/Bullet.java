@@ -12,6 +12,7 @@ public class Bullet {
 
     private Vector3 position;
     private Vector3 velocity;
+    private float velocityMultiplier = 3;
 
     private Texture texture;
 
@@ -23,9 +24,10 @@ public class Bullet {
 
     public boolean remove = false;
 
-    public Bullet(float x, float y, int power, int height){
+    public Bullet(float x, float y, int horizontal, int vertical){
         position = new Vector3(x,y, 0);
-        velocity = new Vector3(power,height,0);
+
+        velocity = new Vector3(horizontal, vertical,0);
 
         this.rect = new CollisionRect(x, y, size, size);
         if(texture == null)
@@ -37,18 +39,15 @@ public class Bullet {
     public void update(float deltaTime){
 
         if(position.y > 0){
-            velocity.add(0, GRAVITY,0);}
+            velocity.add(0, velocityMultiplier * GRAVITY,0);}
 
         velocity.scl(deltaTime);
-        position.add(velocity.x, velocity.y, 0);
-        position.add(0, velocity.y, 0);
+        position.add(velocityMultiplier * velocity.x, velocityMultiplier * 2 * velocity.y, 0);
 
-        if(position.y < 0) {
-            position.y = 0; }
 
         velocity.scl(1/deltaTime);
 
-        if(position.y > Gdx.graphics.getHeight() || position.x > Gdx.graphics.getWidth())
+        if(position.y > Gdx.graphics.getHeight() || position.x > Gdx.graphics.getWidth() || position.x < 0 || position.y < -20)
         {
             remove = true;
         }
