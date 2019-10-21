@@ -19,7 +19,7 @@ public class Bird {
     {
         position = new Vector3(x,y, 0);
         velocity = new Vector3(0,0,0);
-        bird = new Texture("bird.png");
+        bird = new Texture("Tennisbal.png");
     }
 
     public void update(float dt)
