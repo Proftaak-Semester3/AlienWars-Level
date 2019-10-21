@@ -2,14 +2,14 @@ package com.martens.game.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.martens.game.MyGdxGame;
 
 public class  DesktopLauncher{
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = FlappyDemo.WIDTH;
-		config.height = FlappyDemo.HEIGHT;
-		config.title = FlappyDemo.TITLE;
-		new LwjglApplication(new FlappyDemo(), config);
+		config.width = AlienDemo.WIDTH;
+		config.height = AlienDemo.HEIGHT;
+		config.fullscreen = true;
+		config.title = AlienDemo.TITLE;
+		new LwjglApplication(new AlienDemo(), config);
 	}
 }

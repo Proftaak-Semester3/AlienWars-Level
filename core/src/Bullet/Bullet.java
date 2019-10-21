@@ -15,6 +15,8 @@ public class Bullet {
 
     private Texture texture;
 
+    private int size = 30;
+
     CollisionRect rect;
     double down = 0.955;
     double Height = 1;
@@ -25,7 +27,7 @@ public class Bullet {
         position = new Vector3(x,y, 0);
         velocity = new Vector3(power,height,0);
 
-        this.rect = new CollisionRect(x, y, 80, 80);
+        this.rect = new CollisionRect(x, y, size, size);
         if(texture == null)
         {
             texture = new Texture("Tennisbal.png");
@@ -55,7 +57,7 @@ public class Bullet {
 
     public void render(SpriteBatch batch)
     {
-        batch.draw(texture, position.x, position.y, 80, 80);
+        batch.draw(texture, position.x, position.y, size, size);
     }
 
     public CollisionRect getCollisionRect ()

@@ -7,11 +7,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.martens.game.desktop.states.GameStateManager;
 import com.martens.game.desktop.states.MenuState;
 
-public class FlappyDemo extends ApplicationAdapter {
-    public static final int WIDTH = 1900;
+public class AlienDemo extends ApplicationAdapter {
+    public static final int WIDTH = 1920;
     public static final int HEIGHT = 1080;
 
-    public static final String TITLE = "test";
+    public static final String TITLE = "Alien Demo";
     private GameStateManager gsm;
 
     private SpriteBatch batch;

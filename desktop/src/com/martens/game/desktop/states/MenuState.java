@@ -1,9 +1,10 @@
 package com.martens.game.desktop.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.martens.game.desktop.FlappyDemo;
+import com.martens.game.desktop.AlienDemo;
 
 public class MenuState extends State{
     private Texture background;
@@ -23,6 +24,10 @@ public class MenuState extends State{
             gsm.set(new PlayState(gsm));
             dispose();
         }
+        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE))
+        {
+            Gdx.app.exit();
+        }
     }
 
     @Override
@@ -33,8 +38,8 @@ public class MenuState extends State{
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
-        sb.draw(background, 0 , 0, FlappyDemo.WIDTH, FlappyDemo.HEIGHT);
-        sb.draw(playBtn, (FlappyDemo.WIDTH / 2) - (playBtn.getWidth() / 2), FlappyDemo.HEIGHT / 2);
+        sb.draw(background, 0 , 0, AlienDemo.WIDTH, AlienDemo.HEIGHT);
+        sb.draw(playBtn, (AlienDemo.WIDTH / 2) - (playBtn.getWidth() / 2), AlienDemo.HEIGHT / 2);
         sb.end();
     }
 
