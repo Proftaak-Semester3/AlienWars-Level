@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import Objects.Player;
+import com.badlogic.gdx.math.Vector3;
 
 import java.util.ArrayList;
 
@@ -38,8 +39,12 @@ public class PlayState  extends State{
         {
             if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 Player currentPlayer = turnHandler.getCurrentPlayer();
-                bullets.add(new Bullet(currentPlayer.getXPosition(), currentPlayer.getYPosition(), Gdx.input.getX() - (int)currentPlayer.getXPosition(), Gdx.graphics.getHeight() - Gdx.input.getY() - (int)currentPlayer.getYPosition(), turnHandler.player1turn()));
-                turnHandler.SwitchTurn();
+
+                Vector3 convertedInputPosition = cam.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+                if(bullets.size() <= 0){
+                    bullets.add(new Bullet(currentPlayer.getXPosition(), currentPlayer.getYPosition(), (int) (convertedInputPosition.x - currentPlayer.getXPosition()), (int) (convertedInputPosition.y - currentPlayer.getYPosition()), turnHandler.player1turn()));
+                    turnHandler.SwitchTurn();
+                }
             }
         }
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE))
@@ -70,14 +75,33 @@ public class PlayState  extends State{
         bullets.removeAll(bulletToRemove);
     }
 
-    @Override
-    public void render(SpriteBatch sb) {
+    private void UpdateCameraPosition(){
+        Vector3 camPosition = new Vector3();
+
+        float camMinX = cam.viewportWidth / 2;
+        float camMinY = cam.viewportHeight / 2;
+
+        float camMaxX = AlienDemo.WIDTH - (cam.viewportWidth / 2);
+        float camMaxY = AlienDemo.HEIGHT - (cam.viewportHeight / 2);
+
         if(bullets.size() != 0){
             cam.position.set(bullets.get(0).getPosition().x, bullets.get(0).getPosition().y, 0);
         }
         else{
             cam.position.set(turnHandler.getCurrentPlayer().getXPosition(), turnHandler.getCurrentPlayer().getYPosition(), 0);
         }
+
+        camPosition.x = Math.min(camMaxX, Math.max(camMinX, cam.position.x));
+        camPosition.y = Math.min(camMaxY, Math.max(camMinY, cam.position.y));
+
+        cam.position.set(camPosition);
+    }
+
+    @Override
+    public void render(SpriteBatch sb) {
+
+        UpdateCameraPosition();
+
         cam.update();
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
