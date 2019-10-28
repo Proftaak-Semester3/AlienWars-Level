@@ -12,10 +12,6 @@ public class Bullet {
 
     private Vector3 position;
 
-    public Vector3 getPosition() {
-        return position;
-    }
-
     private Vector3 velocity;
 
     public Vector3 getPosition() {
