@@ -24,10 +24,19 @@ public class Bullet {
 
     public boolean remove = false;
 
-    public Bullet(float x, float y, int horizontal, int vertical){
+    public Bullet(float x, float y, int horizontal, int vertical, boolean player1Turn){
+        int horizontalSpeed = 0;
+        int verticalSpeed = Math.min(vertical, 330);
+        if(player1Turn){
+            horizontalSpeed = Math.min(horizontal, 550);
+        }
+        else{
+            horizontalSpeed = Math.max(horizontal, -550);
+        }
+
         position = new Vector3(x,y, 0);
 
-        velocity = new Vector3(horizontal, vertical,0);
+        velocity = new Vector3(horizontalSpeed, verticalSpeed,0);
 
         this.rect = new CollisionRect(x, y, size, size);
         if(texture == null)
