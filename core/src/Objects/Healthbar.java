@@ -11,17 +11,19 @@ public class Healthbar {
     private Vector3 position;
     private double scale = 1.3;
     private int totalwidth;
+    private int number;
 
     Texture damagebar;
     Texture healthbar;
 
-    public Healthbar(int x, int y, int health)
+    public Healthbar(int x, int y, int health, int number)
     {
+        this.number = number;
         position = new Vector3(x, y,0);
         damagebar = new Texture("red bar.jpg");
         healthbar = new Texture("green bar.jpg");
         double width = health * scale;
-        totalwidth = (int)width;
+        totalwidth = (int) width;
         widthhealth = (int) width;
     }
 
@@ -36,8 +38,8 @@ public class Healthbar {
     {
         if(widthhealth <= 0)
         {
-            widthhealth = 0;
-        }
+        widthhealth = 0;
+    }
     }
 
     public void damage(int health) {
@@ -46,8 +48,17 @@ public class Healthbar {
     }
     public void updateposition(Vector3 update)
     {
-        position.x = update.x;
-        position.y = update.y + 150;
-        position.z = update.z;
+        if(number == 0)
+        {
+            position.x = update.x - 60;
+            position.y = update.y + 150;
+            position.z = update.z;
+        }
+        else
+        {
+            position.x = update.x;
+            position.y = update.y + 150;
+            position.z = update.z;
+        }
     }
 }

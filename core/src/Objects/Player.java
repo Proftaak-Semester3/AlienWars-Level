@@ -31,18 +31,17 @@ public class Player {
         position = new Vector3(x, y, 0);
         PlayerNumber = number;
         velocity = new Vector3(0, 0, 0);
+        health = 100;
         if(number == 0)
         {
             rect = new CollisionRect(x - 60, y, 60, 60);
-            healthbar = new Healthbar((int)position.x - 160, (int)(position.y + 100), health);
+            healthbar = new Healthbar((int)position.x - 160, (int)(position.y + 100), health, number);
         }
         else
         {
             rect = new CollisionRect(x,y, 60, 60);
-            healthbar = new Healthbar((int)position.x - 60, (int)(position.y + 100), health);
+            healthbar = new Healthbar((int)position.x, (int)(position.y + 100), health, number);
         }
-        health = 100;
-        healthbar = new Healthbar((int)(position.x - 60), (int)(position.y + 100), health);
         ship = new CollisionRect(x - 60, y - 20, 100, 10);
     }
 
@@ -59,12 +58,22 @@ public class Player {
         }
         if(hit)
         {
-            if (velocity.x <= 0) {
-                hit = false;
-                velocity.x = 0;
+            if (PlayerNumber == 0) {
+                if (velocity.x >= 0) {
+                    hit = false;
+                    velocity.x = 0;
+                } else {
+                    velocity.x = velocity.x + 1;
+                }
             }
-            else {
-                velocity.x = velocity.x - 1;
+            else
+            {
+                if (velocity.x <= 0) {
+                    hit = false;
+                    velocity.x = 0;
+                } else {
+                    velocity.x = velocity.x - 1;
+                }
             }
         }
         if(position.y > 0 && !onship){
