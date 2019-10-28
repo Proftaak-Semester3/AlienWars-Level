@@ -12,6 +12,11 @@ public class Bullet {
 
     private Vector3 position;
     private Vector3 velocity;
+
+    public Vector3 getPosition() {
+        return position;
+    }
+
     private float velocityMultiplier = 3;
 
     private Texture texture;

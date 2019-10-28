@@ -19,6 +19,7 @@ public class PlayState  extends State{
     private int playerSize = 60;
 
     private ArrayList<Bullet> bullets;
+    Bullet currentBullet;
 
 
     protected PlayState(GameStateManager gsm) {
@@ -35,7 +36,8 @@ public class PlayState  extends State{
         {
             if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 Player currentPlayer = turnHandler.GetCurrentPlayer();
-                bullets.add(new Bullet(currentPlayer.getXPosition(), currentPlayer.getYPosition(), Gdx.input.getX() - (int)currentPlayer.getXPosition(), Gdx.graphics.getHeight() - Gdx.input.getY() - (int)currentPlayer.getYPosition(), turnHandler.player1turn()));
+                currentBullet = new Bullet(currentPlayer.getXPosition(), currentPlayer.getYPosition(), Gdx.input.getX() - (int)currentPlayer.getXPosition(), Gdx.graphics.getHeight() - Gdx.input.getY() - (int)currentPlayer.getYPosition(), turnHandler.player1turn());
+                bullets.add(currentBullet);
                 turnHandler.SwitchTurn();
             }
         }
@@ -49,7 +51,9 @@ public class PlayState  extends State{
     @Override
     public void update(float dt) {
         handleInput();
-        
+
+
+
         cam.update();
 
         removeBullets(dt);
