@@ -1,4 +1,4 @@
-package com.martens.game.desktop.states;
+package states;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
