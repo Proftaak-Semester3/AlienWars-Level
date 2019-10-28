@@ -7,11 +7,13 @@ public class Player {
     Texture Player;
     float XPosition;
     float YPosition;
+    int PlayerNumber;
 
-    public Player(String File, float x, float y) {
+    public Player(String File, float x, float y, int number) {
         Player = new Texture(File);
         XPosition = x;
         YPosition = y;
+        PlayerNumber = number;
     }
 
     public Texture getTexture() {
