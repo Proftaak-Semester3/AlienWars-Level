@@ -4,6 +4,7 @@ import Bullet.*;
 import Render.AlienDemo;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -15,6 +16,7 @@ public class PlayState  extends State{
 
     private TurnHandler turnHandler;
     private Texture bg;
+    private OrthographicCamera cam;
 
     private int playerSize = 60;
 
@@ -24,7 +26,8 @@ public class PlayState  extends State{
     protected PlayState(GameStateManager gsm) {
         super(gsm);
         turnHandler = new TurnHandler();
-        cam.setToOrtho(false, AlienDemo.WIDTH /2, AlienDemo.HEIGHT /2);
+        cam = new OrthographicCamera(AlienDemo.WIDTH /1.2F , AlienDemo.HEIGHT / 1.2F);
+        cam.update();
         bg = new Texture("melkweg.jpg");
         bullets = new ArrayList<>();
     }
@@ -34,7 +37,7 @@ public class PlayState  extends State{
         if(Gdx.input.justTouched())
         {
             if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                Player currentPlayer = turnHandler.GetCurrentPlayer();
+                Player currentPlayer = turnHandler.getCurrentPlayer();
                 bullets.add(new Bullet(currentPlayer.getXPosition(), currentPlayer.getYPosition(), Gdx.input.getX() - (int)currentPlayer.getXPosition(), Gdx.graphics.getHeight() - Gdx.input.getY() - (int)currentPlayer.getYPosition(), turnHandler.player1turn()));
                 turnHandler.SwitchTurn();
             }
@@ -49,8 +52,6 @@ public class PlayState  extends State{
     @Override
     public void update(float dt) {
         handleInput();
-        
-        cam.update();
 
         removeBullets(dt);
     }
@@ -71,17 +72,22 @@ public class PlayState  extends State{
 
     @Override
     public void render(SpriteBatch sb) {
-
+        if(bullets.size() != 0){
+            cam.position.set(bullets.get(0).getPosition().x, bullets.get(0).getPosition().y, 0);
+        }
+        else{
+            cam.position.set(turnHandler.getCurrentPlayer().getXPosition(), turnHandler.getCurrentPlayer().getYPosition(), 0);
+        }
+        cam.update();
+        sb.setProjectionMatrix(cam.combined);
         sb.begin();
-
-        sb.draw(bg, 0, 0, AlienDemo.WIDTH, AlienDemo.HEIGHT);
+        sb.draw(bg, 0, 0, AlienDemo.WIDTH , AlienDemo.HEIGHT);
         sb.draw(turnHandler.getPlayer1().getTexture(), turnHandler.getPlayer1().getXPosition(), turnHandler.getPlayer1().getYPosition(), -playerSize, playerSize * 1.8f);
         sb.draw(turnHandler.getPlayer2().getTexture(), turnHandler.getPlayer2().getXPosition(), turnHandler.getPlayer2().getYPosition(), playerSize, playerSize * 1.8f);
 
         for (Bullet bullet: bullets) {
             bullet.render(sb);
         }
-
         sb.end();
     }
 

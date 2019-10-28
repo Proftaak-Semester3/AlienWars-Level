@@ -9,7 +9,7 @@ public class TurnHandler {
 
     private Player currentPlayer = player1;
 
-    public Player GetCurrentPlayer(){
+    public Player getCurrentPlayer(){
         return currentPlayer;
     }
 
