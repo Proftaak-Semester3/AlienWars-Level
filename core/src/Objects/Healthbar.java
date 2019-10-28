@@ -1,4 +1,4 @@
-package com.martens.game.desktop.Objects;
+package Objects;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -38,6 +38,6 @@ public class Healthbar {
 
     public void damage(int health)
     {
-        widthhealth = health * 2;
+        widthhealth =  health * 2;
     }
 }

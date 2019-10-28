@@ -4,10 +4,18 @@ import Objects.Player;
 import Render.AlienDemo;
 
 public class TurnHandler {
-    private Player player1 = new Player("alien.png",AlienDemo.WIDTH / 20, AlienDemo.HEIGHT / 20, 0);
-    private Player player2 = new Player("alien.png", AlienDemo.WIDTH - (AlienDemo.WIDTH / 20), AlienDemo.HEIGHT / 20, 1);
 
-    private Player currentPlayer = player1;
+    private Player player1;
+    private Player player2;
+
+    public TurnHandler()
+    {
+        player1 = new Player("alien.png",AlienDemo.WIDTH / 15, AlienDemo.HEIGHT / 20, 0);
+        player2 = new Player("alien.png", AlienDemo.WIDTH - (AlienDemo.WIDTH / 15), AlienDemo.HEIGHT / 20, 1);
+        currentPlayer = player1;
+    }
+
+    private Player currentPlayer;
 
     public Player GetCurrentPlayer(){
         return currentPlayer;

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import Objects.Player;
+import com.badlogic.gdx.math.Vector3;
 
 import java.util.ArrayList;
 
@@ -51,6 +52,36 @@ public class PlayState  extends State{
         handleInput();
         
         cam.update();
+        for (Bullet bullet: bullets) {
+/*            else if(player1.getCollisionRect().collidesWith(bullet.getCollisionRect()))
+            {
+                player1.updateHP((int)bullet.GetVelocity().x / 5);
+            }*/
+            if(turnHandler.getPlayer2().getCollisionRect().collidesWith(bullet.getCollisionRect()) && bullet.isPlayer1turn() && !bullet.hit)
+            {
+                turnHandler.getPlayer2().updateHP((int)bullet.GetVelocity().x / 50);
+                bullet.hit = true;
+                Vector3 vector3 = bullet.GetVelocity();
+                Vector3 bounced = new Vector3();
+                bounced.x = 0 - (vector3.x / 2);
+                bounced.y = Math.round(vector3.y / 2) - 50;
+                bounced.z = vector3.z;
+                bullet.updateVelocity(bounced);
+            }
+            else if(turnHandler.getPlayer1().getCollisionRect().collidesWith(bullet.getCollisionRect()) && !bullet.isPlayer1turn() && !bullet.hit)
+            {
+                turnHandler.getPlayer1().updateHP(0 - ((int)bullet.GetVelocity().x / 50));
+                bullet.hit = true;
+                Vector3 vector3 = bullet.GetVelocity();
+                Vector3 bounced = new Vector3();
+                bounced.x = 0 - (vector3.x / 2);
+                bounced.y = Math.round(vector3.y / 2) - 50;
+                bounced.z = vector3.z;
+                bullet.updateVelocity(bounced);
+            }
+        }
+        turnHandler.getPlayer1().update(dt);
+        turnHandler.getPlayer2().update(dt);
 
         removeBullets(dt);
     }
@@ -77,7 +108,8 @@ public class PlayState  extends State{
         sb.draw(bg, 0, 0, AlienDemo.WIDTH, AlienDemo.HEIGHT);
         sb.draw(turnHandler.getPlayer1().getTexture(), turnHandler.getPlayer1().getXPosition(), turnHandler.getPlayer1().getYPosition(), -playerSize, playerSize * 1.8f);
         sb.draw(turnHandler.getPlayer2().getTexture(), turnHandler.getPlayer2().getXPosition(), turnHandler.getPlayer2().getYPosition(), playerSize, playerSize * 1.8f);
-
+        turnHandler.getPlayer1().getHealthbar().render(sb);
+        turnHandler.getPlayer2().getHealthbar().render(sb);
         for (Bullet bullet: bullets) {
             bullet.render(sb);
         }
