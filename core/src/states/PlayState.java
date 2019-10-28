@@ -1,20 +1,21 @@
-package com.martens.game.desktop.states;
+package states;
 
 import Bullet.Bullet;
+import Render.AlienDemo;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.martens.game.desktop.AlienDemo;
-import com.martens.game.desktop.Objects.Bird;
-import com.martens.game.desktop.Objects.Player;
+
+import Objects.Projectile;
+import Objects.Player;
 
 import java.util.ArrayList;
 
 public class PlayState  extends State{
 
 
-    private Bird bird;
+    private Projectile bird;
     private Player player1;
     private Player player2;
     private Texture bg;
@@ -26,7 +27,7 @@ public class PlayState  extends State{
 
     protected PlayState(GameStateManager gsm) {
         super(gsm);
-        bird = new Bird(50 ,200);
+        bird = new Projectile(50 ,200);
         player1 = new Player("Bird.png", AlienDemo.WIDTH / 20, AlienDemo.HEIGHT / 20);
         player2 = new Player("Ornstein.jpg", AlienDemo.WIDTH - (AlienDemo.WIDTH / 20), AlienDemo.HEIGHT / 20);
         cam.setToOrtho(false, AlienDemo.WIDTH /2, AlienDemo.HEIGHT /2);

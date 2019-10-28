@@ -1,4 +1,4 @@
-package com.martens.game.desktop.Objects;
+package Objects;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;

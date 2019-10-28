@@ -1,10 +1,11 @@
-package com.martens.game.desktop.states;
+package states;
 
+import Render.AlienDemo;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.martens.game.desktop.AlienDemo;
+
 
 public class MenuState extends State{
     private Texture background;
