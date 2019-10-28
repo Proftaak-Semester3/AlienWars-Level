@@ -22,4 +22,8 @@ public class Player {
 
     public float getXPosition() { return XPosition; }
     public float getYPosition() { return YPosition; }
+
+    public int getPlayerNumber() {
+        return PlayerNumber;
+    }
 }

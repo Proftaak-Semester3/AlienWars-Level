@@ -20,8 +20,6 @@ public class PlayState  extends State{
 
     private ArrayList<Bullet> bullets;
 
-    private int turn = 0;
-
 
     protected PlayState(GameStateManager gsm) {
         super(gsm);
@@ -29,8 +27,6 @@ public class PlayState  extends State{
         cam.setToOrtho(false, AlienDemo.WIDTH /2, AlienDemo.HEIGHT /2);
         bg = new Texture("melkweg.jpg");
         bullets = new ArrayList<>();
-
-
     }
 
     @Override
@@ -39,7 +35,7 @@ public class PlayState  extends State{
         {
             if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 Player currentPlayer = turnHandler.GetCurrentPlayer();
-                bullets.add(new Bullet(currentPlayer.getXPosition(), currentPlayer.getYPosition(), Gdx.input.getX() - (int)currentPlayer.getXPosition(), Gdx.graphics.getHeight() - Gdx.input.getY() - (int)currentPlayer.getYPosition()));
+                bullets.add(new Bullet(currentPlayer.getXPosition(), currentPlayer.getYPosition(), Gdx.input.getX() - (int)currentPlayer.getXPosition(), Gdx.graphics.getHeight() - Gdx.input.getY() - (int)currentPlayer.getYPosition(), turnHandler.player1turn()));
                 turnHandler.SwitchTurn();
             }
         }
