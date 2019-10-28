@@ -30,4 +30,8 @@ public class TurnHandler {
         return player2;
     }
 
+    public boolean player1turn(){
+        return currentPlayer.getPlayerNumber() == 0;
+    }
+
 }
