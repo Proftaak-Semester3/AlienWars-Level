@@ -10,6 +10,6 @@ addons:
       secure: "travis encrypt b96d508e554e6d23bcdee2eeeec80b80d87176a0" # encrypted value of your token
 
 script:
-  - ./gradlew build --scan -s
+  #- ./gradlew build --scan -s
   - ./gradlew clean test
   - ./gradlew sonarqube
