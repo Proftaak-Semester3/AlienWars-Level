@@ -12,4 +12,5 @@ addons:
 script:
   #- ./gradlew build --scan -s
   - ./gradlew clean test
-  - ./gradlew sonarqube
+  - ./gradlew clean check build
+  #- ./gradlew sonarqube
