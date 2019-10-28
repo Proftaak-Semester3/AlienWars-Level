@@ -11,6 +11,11 @@ public class Bullet {
     private static final int MOVEMENT = 0;
 
     private Vector3 position;
+
+    public Vector3 getPosition() {
+        return position;
+    }
+
     private Vector3 velocity;
 
     public Vector3 getPosition() {
