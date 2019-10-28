@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector3;
 
 public class Player {
 
-    private static final int GRAVITY = -7;
+    private static final int GRAVITY = -10;
 
     Healthbar healthbar;
 
@@ -17,6 +17,7 @@ public class Player {
 
     private int health;
     public boolean onship = false;
+    public boolean hit = false;
 
     CollisionRect rect;
 
@@ -30,10 +31,19 @@ public class Player {
         position = new Vector3(x, y, 0);
         PlayerNumber = number;
         velocity = new Vector3(0, 0, 0);
-        rect = new CollisionRect(x,y, 60, 60);
-        health = 150;
-        healthbar = new Healthbar((int)position.x, (int)(position.y + 100), health);
-        ship = new CollisionRect(x, y - 20, 100, 10);
+        if(number == 0)
+        {
+            rect = new CollisionRect(x - 60, y, 60, 60);
+            healthbar = new Healthbar((int)position.x - 160, (int)(position.y + 100), health);
+        }
+        else
+        {
+            rect = new CollisionRect(x,y, 60, 60);
+            healthbar = new Healthbar((int)position.x - 60, (int)(position.y + 100), health);
+        }
+        health = 100;
+        healthbar = new Healthbar((int)(position.x - 60), (int)(position.y + 100), health);
+        ship = new CollisionRect(x - 60, y - 20, 100, 10);
     }
 
     public Texture getTexture() {
@@ -45,7 +55,17 @@ public class Player {
         if(rect.collidesWith(ship))
         {
             onship = true;
-            velocity = new Vector3(0, 0, 0);
+            velocity = new Vector3(velocity.x, 0, velocity.z);
+        }
+        if(hit)
+        {
+            if (velocity.x <= 0) {
+                hit = false;
+                velocity.x = 0;
+            }
+            else {
+                velocity.x = velocity.x - 1;
+            }
         }
         if(position.y > 0 && !onship){
             velocity.add(0, GRAVITY,0);}
@@ -54,21 +74,20 @@ public class Player {
         position.add(velocity.x, velocity.y, 0);
         position.add(0, velocity.y, 0);
 
-
         velocity.scl(1/deltaTime);
+
 
         rect.move(position.x, position.y);
 
         healthbar.update(deltaTime);
 
         onship = false;
+        healthbar.updateposition(position);
     }
 
     public float getXPosition() { return position.x; }
     public float getYPosition() { return position.y; }
-    public int getPlayerNumber() {
-        return PlayerNumber;
-    }
+    public int getPlayerNumber() { return PlayerNumber; }
     public void updateHP(int damage) {
         health = health - damage;
         healthbar.damage(health);

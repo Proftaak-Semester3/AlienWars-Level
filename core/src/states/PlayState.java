@@ -61,23 +61,29 @@ public class PlayState  extends State{
             {
                 turnHandler.getPlayer2().updateHP((int)bullet.GetVelocity().x / 50);
                 bullet.hit = true;
-                Vector3 vector3 = bullet.GetVelocity();
                 Vector3 bounced = new Vector3();
-                bounced.x = 0 - (vector3.x / 2);
-                bounced.y = Math.round(vector3.y / 2) - 50;
-                bounced.z = vector3.z;
+                bounced.x = 0 - (bullet.GetVelocity().x / 2);
+                bounced.y = Math.round(bullet.GetVelocity().y / 2) - 50;
+                bounced.z = bullet.GetVelocity().z;
+                Vector3 playerspeed = bounced;
+                playerspeed.x = bullet.GetVelocity().x / 10;
                 bullet.updateVelocity(bounced);
+                turnHandler.getPlayer2().updateVelocity(playerspeed);
+                turnHandler.getPlayer2().hit = true;
             }
             else if(turnHandler.getPlayer1().getCollisionRect().collidesWith(bullet.getCollisionRect()) && !bullet.isPlayer1turn() && !bullet.hit)
             {
                 turnHandler.getPlayer1().updateHP(0 - ((int)bullet.GetVelocity().x / 50));
                 bullet.hit = true;
-                Vector3 vector3 = bullet.GetVelocity();
                 Vector3 bounced = new Vector3();
-                bounced.x = 0 - (vector3.x / 2);
-                bounced.y = Math.round(vector3.y / 2) - 50;
-                bounced.z = vector3.z;
+                bounced.x = 0 - (bullet.GetVelocity().x / 2);
+                bounced.y = Math.round(bullet.GetVelocity().y / 2) - 50;
+                bounced.z = bullet.GetVelocity().z;
+                Vector3 playerspeed = bounced;
+                playerspeed.x = bullet.GetVelocity().x / 10;
                 bullet.updateVelocity(bounced);
+                turnHandler.getPlayer1().updateVelocity(playerspeed);
+                turnHandler.getPlayer1().hit = true;
             }
         }
         turnHandler.getPlayer1().update(dt);

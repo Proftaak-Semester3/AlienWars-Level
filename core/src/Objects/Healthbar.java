@@ -2,30 +2,34 @@ package Objects;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 
 public class Healthbar {
 
     private int widthhealth;
 
-    private int x;
-    private int y;
+    private Vector3 position;
+    private double scale = 1.3;
+    private int totalwidth;
 
     Texture damagebar;
     Texture healthbar;
 
     public Healthbar(int x, int y, int health)
     {
-        this.x = x;
-        this.y = y;
+        position = new Vector3(x, y,0);
         damagebar = new Texture("red bar.jpg");
         healthbar = new Texture("green bar.jpg");
-        widthhealth = health * 2;
+        double width = health * scale;
+        totalwidth = (int)width;
+        widthhealth = (int) width;
     }
 
     public void render(SpriteBatch batch)
     {
-        batch.draw(damagebar, x, y, 300, 20);
-        batch.draw(healthbar, x, y, widthhealth,20);
+
+        batch.draw(damagebar, position.x, position.y, totalwidth , 20);
+        batch.draw(healthbar, position.x, position.y, widthhealth,20);
     }
 
     public void update(float Deltatime)
@@ -36,8 +40,14 @@ public class Healthbar {
         }
     }
 
-    public void damage(int health)
+    public void damage(int health) {
+        double width = health * scale;
+        widthhealth = (int) width;
+    }
+    public void updateposition(Vector3 update)
     {
-        widthhealth =  health * 2;
+        position.x = update.x;
+        position.y = update.y + 150;
+        position.z = update.z;
     }
 }

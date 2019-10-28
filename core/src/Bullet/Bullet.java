@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector3;
 
 public class Bullet {
 
-    private static final int GRAVITY = -10;
+    private static final int GRAVITY = -3;
     private static final int MOVEMENT = 0;
 
     private Vector3 position;
