@@ -4,20 +4,20 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class Player {
 
-    Texture Player;
+    Texture PlayerTexture;
     float XPosition;
     float YPosition;
     int PlayerNumber;
 
     public Player(String File, float x, float y, int number) {
-        Player = new Texture(File);
+        PlayerTexture = new Texture(File);
         XPosition = x;
         YPosition = y;
         PlayerNumber = number;
     }
 
     public Texture getTexture() {
-        return Player;
+        return PlayerTexture;
     }
 
     public float getXPosition() { return XPosition; }
