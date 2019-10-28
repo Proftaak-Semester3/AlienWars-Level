@@ -1,0 +1,15 @@
+language: java
+install: true
+
+jdk: oraclejdk11
+
+addons:
+  sonarcloud:
+    organization: "sonarcloud_organization_key" # the key of the org you chose at step #3
+    token:
+      secure: "travis encrypt b96d508e554e6d23bcdee2eeeec80b80d87176a0" # encrypted value of your token
+
+script:
+  - ./gradlew build --scan -s
+  - ./gradlew clean test
+  - ./gradlew sonarqube
