@@ -30,7 +30,7 @@ public class PlayState  extends State{
         super(gsm);
         this.gsm = gsm;
         turnHandler = new TurnHandler();
-        cam = new OrthographicCamera(AlienDemo.WIDTH /1.2F , AlienDemo.HEIGHT / 1.2F);
+        cam = new OrthographicCamera(AlienDemo.WIDTH /1.5F , AlienDemo.HEIGHT / 1.5F);
         cam.update();
         bg = new Texture("melkweg.jpg");
         bullets = new ArrayList<>();
