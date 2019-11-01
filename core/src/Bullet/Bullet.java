@@ -7,16 +7,21 @@ import com.badlogic.gdx.math.Vector3;
 
 public class Bullet {
 
-    private static final int GRAVITY = -2;
+    private static final int GRAVITY = -3;
     private static final int MOVEMENT = 0;
 
     private Vector3 position;
 
     private Vector3 velocity;
 
+
     public Vector3 getPosition() {
         return position;
     }
+
+    public boolean hit = false;
+    private boolean player1turn;
+
 
     private float velocityMultiplier = 3;
 
@@ -25,12 +30,11 @@ public class Bullet {
     private int size = 30;
 
     CollisionRect rect;
-    double down = 0.955;
-    double Height = 1;
 
     public boolean remove = false;
 
     public Bullet(float x, float y, int horizontal, int vertical, boolean player1Turn){
+        this.player1turn = player1Turn;
         int horizontalSpeed = 0;
         int verticalSpeed = Math.min(vertical, 330);
         if(player1Turn){
@@ -54,10 +58,12 @@ public class Bullet {
     public void update(float deltaTime){
 
         if(position.y > 0){
-            velocity.add(0, velocityMultiplier * GRAVITY,0);}
+            velocity.add(0, velocityMultiplier* GRAVITY,0);}
+
 
         velocity.scl(deltaTime);
-        position.add(velocityMultiplier * velocity.x, velocityMultiplier * 2 * velocity.y, 0);
+        position.add(velocityMultiplier* velocity.x, velocityMultiplier* velocity.y, 0);
+        position.add(0, velocity.y, 0);
 
 
         velocity.scl(1/deltaTime);
@@ -73,7 +79,9 @@ public class Bullet {
     {
         batch.draw(texture, position.x, position.y, size, size);
     }
-
+    public Vector3 GetVelocity() { return velocity; }
+    public void updateVelocity(Vector3 velocity) { this.velocity = velocity; }
+    public boolean isPlayer1turn() { return  player1turn; }
     public CollisionRect getCollisionRect ()
     {
         return rect;
