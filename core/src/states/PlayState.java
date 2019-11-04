@@ -75,11 +75,6 @@ public class PlayState  extends State{
             if(turnHandler.getPlayer2().getCollisionRect().collidesWith(bullet.getCollisionRect()) && bullet.isPlayer1turn() && !bullet.hit)
             {
                 turnHandler.getPlayer2().updateHP((int)bullet.GetVelocity().x / 50);
-                if(turnHandler.getPlayer2().getHealth() <= 0 || turnHandler.getPlayer2().getPosition().x > Gdx.graphics.getWidth() || turnHandler.getPlayer2().getPosition().y < 0 || turnHandler.getPlayer2().getPosition().x < 0)
-                {
-                    gsm.set(new MenuState(gsm));
-                    dispose();
-                }
                 bullet.hit = true;
                 Vector3 bounced = new Vector3();
                 bounced.x = 0 - (bullet.GetVelocity().x / 2);
@@ -94,11 +89,6 @@ public class PlayState  extends State{
             else if(turnHandler.getPlayer1().getCollisionRect().collidesWith(bullet.getCollisionRect()) && !bullet.isPlayer1turn() && !bullet.hit)
             {
                 turnHandler.getPlayer1().updateHP(0 - ((int)bullet.GetVelocity().x / 50));
-                if(turnHandler.getPlayer1().getHealth() <= 0)
-                {
-                    gsm.set(new MenuState(gsm));
-                    dispose();
-                }
                 bullet.hit = true;
                 Vector3 bounced = new Vector3();
                 bounced.x = 0 - (bullet.GetVelocity().x / 2);
@@ -111,7 +101,7 @@ public class PlayState  extends State{
                 turnHandler.getPlayer1().setHit(true);
             }
         }
-        if(turnHandler.getPlayer1().getPosition().x > Gdx.graphics.getWidth() || turnHandler.getPlayer1().getPosition().y < 0 || turnHandler.getPlayer1().getPosition().x < 0 || turnHandler.getPlayer2().getPosition().x > Gdx.graphics.getWidth() || turnHandler.getPlayer2().getPosition().y < 0 || turnHandler.getPlayer2().getPosition().x < 0)
+        if(turnHandler.getPlayer1().isDead() || turnHandler.getPlayer2().isDead())
         {
             gsm.set(new MenuState(gsm));
             dispose();

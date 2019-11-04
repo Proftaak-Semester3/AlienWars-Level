@@ -1,6 +1,7 @@
 package Objects;
 
 import Bullet.CollisionRect;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 
@@ -12,6 +13,7 @@ public class Player {
 
     private Vector3 position;
     private Vector3 velocity;
+    private boolean isDead;
 
     private CollisionRect ship;
 
@@ -28,6 +30,7 @@ public class Player {
 
     public Player(String file, float x, float y, int number) {
         playerTexture = new Texture(file);
+        isDead = false;
         position = new Vector3(x, y, 0);
         playerNumber = number;
         velocity = new Vector3(0, 0, 0);
@@ -51,6 +54,11 @@ public class Player {
 
     public void update(float deltaTime)
     {
+        if (position.x > Gdx.graphics.getWidth() || position.y < 0 || position.x < 0 || health <= 0)
+        {
+                isDead = true;
+        }
+
         if(rect.collidesWith(ship))
         {
             onship = true;
@@ -103,4 +111,5 @@ public class Player {
     public CollisionRect getCollisionRect () { return rect; }
     public Healthbar getHealthbar() { return  healthbar; }
     public void setHit(boolean hit) {  this.hit = hit;  }
+    public boolean isDead() { return isDead; }
 }
