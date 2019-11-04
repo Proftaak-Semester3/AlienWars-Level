@@ -103,6 +103,7 @@ public class PlayState  extends State{
         }
         turnHandler.getPlayer1().update(dt);
         turnHandler.getPlayer2().update(dt);
+
         if(turnHandler.getPlayer1().isDead() || turnHandler.getPlayer2().isDead())
         {
             gsm.set(new MenuState(gsm));
