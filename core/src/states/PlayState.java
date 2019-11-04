@@ -68,34 +68,33 @@ public class PlayState  extends State{
     @Override
     public void update(float dt) {
         handleInput();
-
         
         cam.update();
         for (Bullet bullet: bullets) {
-            if(turnHandler.getPlayer2().getCollisionRect().collidesWith(bullet.getCollisionRect()) && bullet.isPlayer1turn() && !bullet.hit)
+            if(turnHandler.getPlayer2().getCollisionRect().collidesWith(bullet.getCollisionRect()) && bullet.isPlayer1turn() && !bullet.isHit())
             {
-                turnHandler.getPlayer2().updateHP((int)bullet.GetVelocity().x / 50);
-                bullet.hit = true;
+                turnHandler.getPlayer2().updateHP((int)bullet.getVelocity().x / 50);
+                bullet.setHit(true);
                 Vector3 bounced = new Vector3();
-                bounced.x = 0 - (bullet.GetVelocity().x / 2);
-                bounced.y = (Math.round(bullet.GetVelocity().y / 2) - 50);
-                bounced.z = bullet.GetVelocity().z;
+                bounced.x = 0 - (bullet.getVelocity().x / 2);
+                bounced.y = (Math.round(bullet.getVelocity().y / 2) - 50);
+                bounced.z = bullet.getVelocity().z;
                 Vector3 playerspeed = bounced;
-                playerspeed.x = bullet.GetVelocity().x / 10;
+                playerspeed.x = bullet.getVelocity().x / 10;
                 bullet.updateVelocity(bounced);
                 turnHandler.getPlayer2().updateVelocity(playerspeed);
                 turnHandler.getPlayer2().setHit(true);
             }
-            else if(turnHandler.getPlayer1().getCollisionRect().collidesWith(bullet.getCollisionRect()) && !bullet.isPlayer1turn() && !bullet.hit)
+            else if(turnHandler.getPlayer1().getCollisionRect().collidesWith(bullet.getCollisionRect()) && !bullet.isPlayer1turn() && !bullet.isHit())
             {
-                turnHandler.getPlayer1().updateHP(0 - ((int)bullet.GetVelocity().x / 50));
-                bullet.hit = true;
+                turnHandler.getPlayer1().updateHP(0 - ((int)bullet.getVelocity().x / 50));
+                bullet.setHit(true);
                 Vector3 bounced = new Vector3();
-                bounced.x = 0 - (bullet.GetVelocity().x / 2);
-                bounced.y = (Math.round(bullet.GetVelocity().y / 2) - 50);
-                bounced.z = bullet.GetVelocity().z;
+                bounced.x = 0 - (bullet.getVelocity().x / 2);
+                bounced.y = (Math.round(bullet.getVelocity().y / 2) - 50);
+                bounced.z = bullet.getVelocity().z;
                 Vector3 playerspeed = bounced;
-                playerspeed.x = bullet.GetVelocity().x / 10;
+                playerspeed.x = bullet.getVelocity().x / 10;
                 bullet.updateVelocity(bounced);
                 turnHandler.getPlayer1().updateVelocity(playerspeed);
                 turnHandler.getPlayer1().setHit(true);
@@ -106,6 +105,8 @@ public class PlayState  extends State{
 
         if(turnHandler.getPlayer1().isDead() || turnHandler.getPlayer2().isDead())
         {
+            cam = new OrthographicCamera(AlienDemo.WIDTH , AlienDemo.HEIGHT);
+            cam.update();
             gsm.set(new MenuState(gsm));
             dispose();
         }

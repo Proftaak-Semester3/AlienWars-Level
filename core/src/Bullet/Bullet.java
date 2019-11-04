@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Vector3;
 public class Bullet {
 
     private static final int GRAVITY = -3;
-    private static final int MOVEMENT = 0;
 
     private Vector3 position;
 
@@ -19,9 +18,8 @@ public class Bullet {
         return position;
     }
 
-    public boolean hit = false;
+    private boolean hit = false;
     private boolean player1turn;
-
 
     private float velocityMultiplier = 3;
 
@@ -79,11 +77,13 @@ public class Bullet {
     {
         batch.draw(texture, position.x, position.y, size, size);
     }
-    public Vector3 GetVelocity() { return velocity; }
+    public Vector3 getVelocity() { return velocity; }
     public void updateVelocity(Vector3 velocity) { this.velocity = velocity; }
     public boolean isPlayer1turn() { return  player1turn; }
     public CollisionRect getCollisionRect ()
     {
         return rect;
     }
+    public boolean isHit() { return hit; }
+    public void setHit(boolean hit) { this.hit = hit; }
 }

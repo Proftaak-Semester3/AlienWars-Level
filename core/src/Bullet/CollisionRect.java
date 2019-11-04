@@ -1,8 +1,10 @@
 package Bullet;
 
 public class CollisionRect {
-    float x, y;
-    int width, height;
+    private float x;
+    private float y;
+    private int width;
+    private int height;
 
     public CollisionRect(float x, float y, int width, int height)
     {

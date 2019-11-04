@@ -54,11 +54,7 @@ public class Player {
 
     public void update(float deltaTime)
     {
-        if (position.x > Gdx.graphics.getWidth() || position.y < 0 || position.x < 0 || health <= 0)
-        {
-                isDead = true;
-        }
-
+        if (position.x > Gdx.graphics.getWidth() || position.y < 0 || position.x < 0 || health <= 0) { isDead = true; }
         if(rect.collidesWith(ship))
         {
             onship = true;
