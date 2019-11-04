@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 
-public class Bullet {
+public class Bullets {
 
     private static final int GRAVITY = -3;
 
@@ -31,7 +31,7 @@ public class Bullet {
 
     public boolean remove = false;
 
-    public Bullet(float x, float y, int horizontal, int vertical, boolean player1Turn){
+    public Bullets(float x, float y, int horizontal, int vertical, boolean player1Turn){
         this.player1turn = player1Turn;
         int horizontalSpeed = 0;
         int verticalSpeed = Math.min(vertical, 330);

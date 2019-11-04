@@ -28,8 +28,8 @@ public class PlayState  extends State{
 
     private int playerSize = 60;
 
-    private ArrayList<Bullet> bullets;
-    Bullet currentBullet;
+    private ArrayList<Bullets> bullets;
+    Bullets currentBullets;
 
 
     protected PlayState(GameStateManager gsm) {
@@ -53,7 +53,7 @@ public class PlayState  extends State{
 
                 Vector3 convertedInputPosition = cam.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
                 if(bullets.isEmpty()){
-                    bullets.add(new Bullet(currentPlayer.getXPosition(), currentPlayer.getYPosition(), (int) (convertedInputPosition.x - currentPlayer.getXPosition()), (int) (convertedInputPosition.y - currentPlayer.getYPosition()), turnHandler.player1turn()));
+                    bullets.add(new Bullets(currentPlayer.getXPosition(), currentPlayer.getYPosition(), (int) (convertedInputPosition.x - currentPlayer.getXPosition()), (int) (convertedInputPosition.y - currentPlayer.getYPosition()), turnHandler.player1turn()));
                     turnHandler.switchTurn();
                 }
             }
@@ -70,32 +70,32 @@ public class PlayState  extends State{
         handleInput();
         
         cam.update();
-        for (Bullet bullet: bullets) {
-            if(turnHandler.getPlayer2().getCollisionRect().collidesWith(bullet.getCollisionRect()) && bullet.isPlayer1turn() && !bullet.isHit())
+        for (Bullets bullets : this.bullets) {
+            if(turnHandler.getPlayer2().getCollisionRect().collidesWith(bullets.getCollisionRect()) && bullets.isPlayer1turn() && !bullets.isHit())
             {
-                turnHandler.getPlayer2().updateHP((int)bullet.getVelocity().x / 50);
-                bullet.setHit(true);
+                turnHandler.getPlayer2().updateHP((int) bullets.getVelocity().x / 50);
+                bullets.setHit(true);
                 Vector3 bounced = new Vector3();
-                bounced.x = 0 - (bullet.getVelocity().x / 2);
-                bounced.y = (Math.round(bullet.getVelocity().y / 2) - 50);
-                bounced.z = bullet.getVelocity().z;
+                bounced.x = 0 - (bullets.getVelocity().x / 2);
+                bounced.y = (Math.round(bullets.getVelocity().y / 2) - 50);
+                bounced.z = bullets.getVelocity().z;
                 Vector3 playerspeed = bounced;
-                playerspeed.x = bullet.getVelocity().x / 10;
-                bullet.updateVelocity(bounced);
+                playerspeed.x = bullets.getVelocity().x / 10;
+                bullets.updateVelocity(bounced);
                 turnHandler.getPlayer2().updateVelocity(playerspeed);
                 turnHandler.getPlayer2().setHit(true);
             }
-            else if(turnHandler.getPlayer1().getCollisionRect().collidesWith(bullet.getCollisionRect()) && !bullet.isPlayer1turn() && !bullet.isHit())
+            else if(turnHandler.getPlayer1().getCollisionRect().collidesWith(bullets.getCollisionRect()) && !bullets.isPlayer1turn() && !bullets.isHit())
             {
-                turnHandler.getPlayer1().updateHP(0 - ((int)bullet.getVelocity().x / 50));
-                bullet.setHit(true);
+                turnHandler.getPlayer1().updateHP(0 - ((int) bullets.getVelocity().x / 50));
+                bullets.setHit(true);
                 Vector3 bounced = new Vector3();
-                bounced.x = 0 - (bullet.getVelocity().x / 2);
-                bounced.y = (Math.round(bullet.getVelocity().y / 2) - 50);
-                bounced.z = bullet.getVelocity().z;
+                bounced.x = 0 - (bullets.getVelocity().x / 2);
+                bounced.y = (Math.round(bullets.getVelocity().y / 2) - 50);
+                bounced.z = bullets.getVelocity().z;
                 Vector3 playerspeed = bounced;
-                playerspeed.x = bullet.getVelocity().x / 10;
-                bullet.updateVelocity(bounced);
+                playerspeed.x = bullets.getVelocity().x / 10;
+                bullets.updateVelocity(bounced);
                 turnHandler.getPlayer1().updateVelocity(playerspeed);
                 turnHandler.getPlayer1().setHit(true);
             }
@@ -115,17 +115,17 @@ public class PlayState  extends State{
     }
 
     public void removeBullets(float dt){
-        ArrayList<Bullet> bulletToRemove = new ArrayList<>();
+        ArrayList<Bullets> bulletsToRemove = new ArrayList<>();
 
-        for (Bullet bullet: bullets) {
-            bullet.update(dt);
-            if(bullet.remove)
+        for (Bullets bullets : this.bullets) {
+            bullets.update(dt);
+            if(bullets.remove)
             {
-                bulletToRemove.add(bullet);
+                bulletsToRemove.add(bullets);
             }
         }
 
-        bullets.removeAll(bulletToRemove);
+        bullets.removeAll(bulletsToRemove);
     }
 
     private void updateCameraPosition(){
@@ -169,8 +169,8 @@ public class PlayState  extends State{
         sb.draw(turnHandler.getPlayer2().getTexture(), turnHandler.getPlayer2().getXPosition(), turnHandler.getPlayer2().getYPosition(), playerSize, playerSize * 1.8f);
         turnHandler.getPlayer1().getHealthbar().render(sb);
         turnHandler.getPlayer2().getHealthbar().render(sb);
-        for (Bullet bullet: bullets) {
-            bullet.render(sb);
+        for (Bullets bullets : this.bullets) {
+            bullets.render(sb);
         }
         sb.draw(textureship, (x1 - 60), (y1 - 20), 100, 10);
         sb.draw(textureship, (x2 - 60), (y2 - 20), 100, 10);
