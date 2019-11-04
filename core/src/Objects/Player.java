@@ -8,7 +8,7 @@ public class Player {
 
     private static final int GRAVITY = -10;
 
-    Healthbar healthbar;
+    private Healthbar healthbar;
 
     private Vector3 position;
     private Vector3 velocity;
@@ -16,37 +16,37 @@ public class Player {
     private CollisionRect ship;
 
     private int health;
-    public boolean onship = false;
-    public boolean hit = false;
+    private boolean onship = false;
+    private boolean hit = false;
 
-    CollisionRect rect;
+    private CollisionRect rect;
 
-    Texture PlayerTexture;
-    int PlayerNumber;
+    private Texture playerTexture;
+    private int playerNumber;
 
 
 
-    public Player(String File, float x, float y, int number) {
-        PlayerTexture = new Texture(File);
+    public Player(String file, float x, float y, int number) {
+        playerTexture = new Texture(file);
         position = new Vector3(x, y, 0);
-        PlayerNumber = number;
+        playerNumber = number;
         velocity = new Vector3(0, 0, 0);
         health = 100;
         if(number == 0)
         {
             rect = new CollisionRect(x - 60, y, 60, 60);
-            healthbar = new Healthbar((int)position.x - 160, (int)(position.y + 100), health, number);
+            healthbar = new Healthbar((int)(position.x - 160), (int)(position.y + 100), health, number);
         }
         else
         {
-            rect = new CollisionRect(x,y, 60, 60);
+            rect = new CollisionRect(x, y, 60, 60);
             healthbar = new Healthbar((int)position.x, (int)(position.y + 100), health, number);
         }
         ship = new CollisionRect(x - 60, y - 20, 100, 10);
     }
 
     public Texture getTexture() {
-        return PlayerTexture;
+        return playerTexture;
     }
 
     public void update(float deltaTime)
@@ -58,7 +58,7 @@ public class Player {
         }
         if(hit)
         {
-            if (PlayerNumber == 0) {
+            if (playerNumber == 0) {
                 if (velocity.x >= 0) {
                     hit = false;
                     velocity.x = 0;
@@ -76,8 +76,7 @@ public class Player {
                 }
             }
         }
-        if(position.y > 0 && !onship){
-            velocity.add(0, GRAVITY,0);}
+        if(position.y > 0 && !onship){ velocity.add(0, GRAVITY,0); }
 
         velocity.scl(deltaTime);
         position.add(velocity.x, velocity.y, 0);
@@ -85,25 +84,23 @@ public class Player {
 
         velocity.scl(1/deltaTime);
 
-
-        rect.move(position.x, position.y);
+        if(playerNumber == 0) { rect.move((position.x - 60), position.y); }
+        else { rect.move((position.x), position.y); }
 
         healthbar.update(deltaTime);
 
         onship = false;
-        healthbar.updateposition(position);
+        healthbar.updatePosition(position);
     }
 
     public float getXPosition() { return position.x; }
     public float getYPosition() { return position.y; }
-    public int getPlayerNumber() { return PlayerNumber; }
-    public void updateHP(int damage) {
-        health = health - damage;
-        healthbar.damage(health);
-    }
+    public int getPlayerNumber() { return playerNumber; }
+    public void updateHP(int damage) { health = health - damage;  healthbar.damage(health); }
     public int getHealth() { return health; }
     public void updateVelocity(Vector3 update) { velocity = update; }
     public Vector3 getPosition() { return position; }
     public CollisionRect getCollisionRect () { return rect; }
     public Healthbar getHealthbar() { return  healthbar; }
+    public void setHit(boolean hit) {  this.hit = hit;  }
 }

@@ -13,15 +13,15 @@ public class Healthbar {
     private int totalwidth;
     private int number;
 
-    Texture damagebar;
-    Texture healthbar;
+    private Texture barDamageTexture;
+    private Texture barHealthTexture;
 
     public Healthbar(int x, int y, int health, int number)
     {
         this.number = number;
         position = new Vector3(x, y,0);
-        damagebar = new Texture("red bar.jpg");
-        healthbar = new Texture("green bar.jpg");
+        barDamageTexture = new Texture("red bar.jpg");
+        barHealthTexture = new Texture("green bar.jpg");
         double width = health * scale;
         totalwidth = (int) width;
         widthhealth = (int) width;
@@ -30,11 +30,11 @@ public class Healthbar {
     public void render(SpriteBatch batch)
     {
 
-        batch.draw(damagebar, position.x, position.y, totalwidth , 20);
-        batch.draw(healthbar, position.x, position.y, widthhealth,20);
+        batch.draw(barDamageTexture, position.x, position.y, totalwidth , 20);
+        batch.draw(barHealthTexture, position.x, position.y, widthhealth,20);
     }
 
-    public void update(float Deltatime)
+    public void update(float deltaTime)
     {
         if(widthhealth <= 0)
         {
@@ -46,7 +46,7 @@ public class Healthbar {
         double width = health * scale;
         widthhealth = (int) width;
     }
-    public void updateposition(Vector3 update)
+    public void updatePosition(Vector3 update)
     {
         if(number == 0)
         {

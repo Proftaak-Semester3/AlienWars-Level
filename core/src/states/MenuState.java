@@ -40,7 +40,7 @@ public class MenuState extends State{
     public void render(SpriteBatch sb) {
         sb.begin();
         sb.draw(background, 0 , 0, AlienDemo.WIDTH, AlienDemo.HEIGHT);
-        sb.draw(playBtn, (AlienDemo.WIDTH / 2) - (playBtn.getWidth() / 2), AlienDemo.HEIGHT / 2);
+        sb.draw(playBtn, ((AlienDemo.WIDTH / 2) - (playBtn.getWidth() / 2)), (AlienDemo.HEIGHT / 2));
         sb.end();
     }
 

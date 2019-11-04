@@ -17,8 +17,14 @@ public class PlayState  extends State{
 
     private TurnHandler turnHandler;
     private Texture bg;
+    private Texture textureship;
     private OrthographicCamera cam;
     private GameStateManager gsm;
+    private boolean justonce;
+    private int x1;
+    private int x2;
+    private int y1;
+    private int y2;
 
     private int playerSize = 60;
 
@@ -29,10 +35,12 @@ public class PlayState  extends State{
     protected PlayState(GameStateManager gsm) {
         super(gsm);
         this.gsm = gsm;
+        justonce = true;
         turnHandler = new TurnHandler();
         cam = new OrthographicCamera(AlienDemo.WIDTH /1.5F , AlienDemo.HEIGHT / 1.5F);
         cam.update();
         bg = new Texture("melkweg.jpg");
+        textureship = new Texture("bottomtube.png");
         bullets = new ArrayList<>();
     }
 
@@ -44,9 +52,9 @@ public class PlayState  extends State{
                 Player currentPlayer = turnHandler.getCurrentPlayer();
 
                 Vector3 convertedInputPosition = cam.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-                if(bullets.size() <= 0){
+                if(bullets.isEmpty()){
                     bullets.add(new Bullet(currentPlayer.getXPosition(), currentPlayer.getYPosition(), (int) (convertedInputPosition.x - currentPlayer.getXPosition()), (int) (convertedInputPosition.y - currentPlayer.getYPosition()), turnHandler.player1turn()));
-                    turnHandler.SwitchTurn();
+                    turnHandler.switchTurn();
                 }
             }
         }
@@ -64,10 +72,6 @@ public class PlayState  extends State{
         
         cam.update();
         for (Bullet bullet: bullets) {
-/*            else if(player1.getCollisionRect().collidesWith(bullet.getCollisionRect()))
-            {
-                player1.updateHP((int)bullet.GetVelocity().x / 5);
-            }*/
             if(turnHandler.getPlayer2().getCollisionRect().collidesWith(bullet.getCollisionRect()) && bullet.isPlayer1turn() && !bullet.hit)
             {
                 turnHandler.getPlayer2().updateHP((int)bullet.GetVelocity().x / 50);
@@ -79,13 +83,13 @@ public class PlayState  extends State{
                 bullet.hit = true;
                 Vector3 bounced = new Vector3();
                 bounced.x = 0 - (bullet.GetVelocity().x / 2);
-                bounced.y = Math.round(bullet.GetVelocity().y / 2) - 50;
+                bounced.y = (Math.round(bullet.GetVelocity().y / 2) - 50);
                 bounced.z = bullet.GetVelocity().z;
                 Vector3 playerspeed = bounced;
                 playerspeed.x = bullet.GetVelocity().x / 10;
                 bullet.updateVelocity(bounced);
                 turnHandler.getPlayer2().updateVelocity(playerspeed);
-                turnHandler.getPlayer2().hit = true;
+                turnHandler.getPlayer2().setHit(true);
             }
             else if(turnHandler.getPlayer1().getCollisionRect().collidesWith(bullet.getCollisionRect()) && !bullet.isPlayer1turn() && !bullet.hit)
             {
@@ -98,13 +102,13 @@ public class PlayState  extends State{
                 bullet.hit = true;
                 Vector3 bounced = new Vector3();
                 bounced.x = 0 - (bullet.GetVelocity().x / 2);
-                bounced.y = Math.round(bullet.GetVelocity().y / 2) - 50;
+                bounced.y = (Math.round(bullet.GetVelocity().y / 2) - 50);
                 bounced.z = bullet.GetVelocity().z;
                 Vector3 playerspeed = bounced;
                 playerspeed.x = bullet.GetVelocity().x / 10;
                 bullet.updateVelocity(bounced);
                 turnHandler.getPlayer1().updateVelocity(playerspeed);
-                turnHandler.getPlayer1().hit = true;
+                turnHandler.getPlayer1().setHit(true);
             }
         }
         if(turnHandler.getPlayer1().getPosition().x > Gdx.graphics.getWidth() || turnHandler.getPlayer1().getPosition().y < 0 || turnHandler.getPlayer1().getPosition().x < 0 || turnHandler.getPlayer2().getPosition().x > Gdx.graphics.getWidth() || turnHandler.getPlayer2().getPosition().y < 0 || turnHandler.getPlayer2().getPosition().x < 0)
@@ -132,7 +136,7 @@ public class PlayState  extends State{
         bullets.removeAll(bulletToRemove);
     }
 
-    private void UpdateCameraPosition(){
+    private void updateCameraPosition(){
         Vector3 camPosition = new Vector3();
 
         float camMinX = cam.viewportWidth / 2;
@@ -141,7 +145,7 @@ public class PlayState  extends State{
         float camMaxX = AlienDemo.WIDTH - (cam.viewportWidth / 2);
         float camMaxY = AlienDemo.HEIGHT - (cam.viewportHeight / 2);
 
-        if(bullets.size() != 0){
+        if(!bullets.isEmpty()){
             cam.position.set(bullets.get(0).getPosition().x, bullets.get(0).getPosition().y, 0);
         }
         else{
@@ -156,8 +160,14 @@ public class PlayState  extends State{
 
     @Override
     public void render(SpriteBatch sb) {
-
-        UpdateCameraPosition();
+        if(justonce) {
+            x1 = (int) turnHandler.getPlayer1().getXPosition();
+            y1 = (int) turnHandler.getPlayer1().getYPosition();
+            x2 = (int) turnHandler.getPlayer2().getXPosition();
+            y2 = (int) turnHandler.getPlayer2().getYPosition();
+            justonce = false;
+        }
+        updateCameraPosition();
 
         cam.update();
         sb.setProjectionMatrix(cam.combined);
@@ -170,11 +180,13 @@ public class PlayState  extends State{
         for (Bullet bullet: bullets) {
             bullet.render(sb);
         }
+        sb.draw(textureship, (x1 - 60), (y1 - 20), 100, 10);
+        sb.draw(textureship, (x2 - 60), (y2 - 20), 100, 10);
         sb.end();
     }
 
     @Override
     public void dispose() {
-
+        bg.dispose();
     }
 }
