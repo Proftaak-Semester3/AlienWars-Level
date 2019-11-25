@@ -27,5 +27,19 @@ dependencies {
     // https://mvnrepository.com/artifact/org.glassfish.jersey.inject/jersey-hk2
     compile group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: '2.27'
 
+    compile 'javax.xml.bind:jaxb-api:2.2.11'
+
+    compile 'javax.activation:activation:1.1.1'
+
+    compile 'org.glassfish.jersey.media:jersey-media-json-jackson:2.27'
+
+    compile 'org.apache.httpcomponents:httpclient:4.5.7'
+
+    compile group: 'org.mindrot', name: 'jbcrypt',version: '0.4'
+
+    compile group: 'com.microsoft.sqlserver', name: 'mssql-jdbc', version: '7.0.0.jre8'
+
+    compile project(':AlienWarsShared')
+
 
 }

@@ -8,7 +8,7 @@ public class AlienWarsREST {
         ServletContextHandler context = new
                 ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
-        Server jettyServer = new Server(8090);
+        Server jettyServer = new Server(8191);
         jettyServer.setHandler(context);
         ServletHolder jerseyServlet = context.addServlet(ServletContainer.class, "/*");
         jerseyServlet.setInitOrder(0);

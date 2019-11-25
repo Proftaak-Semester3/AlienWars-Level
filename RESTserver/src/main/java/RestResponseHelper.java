@@ -1,17 +1,20 @@
 import com.google.gson.Gson;
+import restShared.AccountResponse;
 
 public class RestResponseHelper {
 
     private static final Gson gson = new Gson();
 
     static String getErrorResponseString(){
-        //TODO
-        return null;
+        AccountResponse response = new AccountResponse();
+        response.setSuccess(false);
+        return gson.toJson(response);
     }
 
     static String getSuccesResponse(){
-        //TODO
-        return null;
+        AccountResponse response = new AccountResponse();
+        response.setSuccess(true);
+        return gson.toJson(response);
     }
 
     static String getSingleAccountResponse(){
