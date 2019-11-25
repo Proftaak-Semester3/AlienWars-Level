@@ -1,0 +1,75 @@
+package Websockets;
+
+import javax.websocket.ContainerProvider;
+import javax.websocket.Session;
+import javax.websocket.WebSocketContainer;
+import java.net.URI;
+
+public class WebsocketClient {
+    private final static String uri = "ws://localhost:8095/alien/";
+    private Session session;
+
+    public static void main(String[] args) {
+        try {
+            WebSocketContainer container = ContainerProvider.getWebSocketContainer();
+            try {
+                // Attempt Connect
+                Session session = container.connectToServer(WebsocketC.class, new URI(uri));
+                // Send a message
+                MessageHandler handler = new MessageHandler();
+                session.getBasicRemote().sendObject(handler.createBulletMessage(5,5,10,10,true));
+                // Close session
+                Thread.sleep(10000);
+                session.close();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        } catch (Throwable t) {
+            t.printStackTrace(System.err);
+        }
+    }
+
+    /*public WebsocketClient() {
+        try {
+            WebSocketContainer container = ContainerProvider.getWebSocketContainer();
+            try {
+                // Attempt Connect
+                session = container.connectToServer(WebsocketC.class, new URI(uri));
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        } catch (Exception t) {
+            t.printStackTrace();
+        }
+    }
+
+    public void sendMessage(JsonObject message) {
+        try {
+            session.getBasicRemote().sendObject(message);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void closeConnection()
+    {
+        try
+        {
+            session.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+    }*/
+
+
+
+}

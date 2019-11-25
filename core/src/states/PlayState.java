@@ -2,6 +2,8 @@ package states;
 
 import Bullet.*;
 import Render.AlienDemo;
+import Websockets.WebsocketC;
+import Websockets.WebsocketClient;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -20,7 +22,9 @@ public class PlayState  extends State{
     private Texture textureship;
     private OrthographicCamera cam;
     private GameStateManager gsm;
+    private WebsocketClient client;
     private boolean justonce;
+    private boolean waiting;
     private int x1;
     private int x2;
     private int y1;
@@ -32,8 +36,9 @@ public class PlayState  extends State{
     Bullets currentBullets;
 
 
-    protected PlayState(GameStateManager gsm) {
+    protected PlayState(GameStateManager gsm, boolean firstToFire, WebsocketClient client) {
         super(gsm);
+        this.client = client;
         this.gsm = gsm;
         justonce = true;
         turnHandler = new TurnHandler();
@@ -42,6 +47,10 @@ public class PlayState  extends State{
         bg = new Texture("melkweg.jpg");
         textureship = new Texture("bottomtube.png");
         bullets = new ArrayList<>();
+        if(!firstToFire)
+        {
+            turnHandler.switchTurn();
+        }
     }
 
     @Override
@@ -51,8 +60,9 @@ public class PlayState  extends State{
             if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 Player currentPlayer = turnHandler.getCurrentPlayer();
 
+
                 Vector3 convertedInputPosition = cam.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-                if(bullets.isEmpty()){
+                if(bullets.isEmpty() && turnHandler.player1turn()){
                     bullets.add(new Bullets(currentPlayer.getXPosition(), currentPlayer.getYPosition(), (int) (convertedInputPosition.x - currentPlayer.getXPosition()), (int) (convertedInputPosition.y - currentPlayer.getYPosition()), turnHandler.player1turn()));
                     turnHandler.switchTurn();
                 }
@@ -180,5 +190,11 @@ public class PlayState  extends State{
     @Override
     public void dispose() {
         bg.dispose();
+    }
+
+    public void enemyMove(Bullets bullet)
+    {
+        bullets.add(bullet);
+        turnHandler.switchTurn();
     }
 }

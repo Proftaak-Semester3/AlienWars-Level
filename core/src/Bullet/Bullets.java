@@ -10,13 +10,7 @@ public class Bullets {
     private static final int GRAVITY = -3;
 
     private Vector3 position;
-
     private Vector3 velocity;
-
-
-    public Vector3 getPosition() {
-        return position;
-    }
 
     private boolean hit = false;
     private boolean player1turn;
@@ -56,13 +50,11 @@ public class Bullets {
     public void update(float deltaTime){
 
         if(position.y > 0){
-            velocity.add(0, velocityMultiplier* GRAVITY,0);}
-
+            velocity.add(0, velocityMultiplier* GRAVITY,0); }
 
         velocity.scl(deltaTime);
         position.add(velocityMultiplier* velocity.x, velocityMultiplier* velocity.y, 0);
         position.add(0, velocity.y, 0);
-
 
         velocity.scl(1/deltaTime);
 
@@ -86,4 +78,7 @@ public class Bullets {
     }
     public boolean isHit() { return hit; }
     public void setHit(boolean hit) { this.hit = hit; }
+    public Vector3 getPosition() {
+        return position;
+    }
 }
