@@ -1,5 +1,7 @@
 package Websockets;
 
+import org.json.JSONObject;
+
 import javax.websocket.ContainerProvider;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
@@ -9,7 +11,7 @@ public class WebsocketClient {
     private final static String uri = "ws://localhost:8095/alien/";
     private Session session;
 
-    public static void main(String[] args) {
+ /*   public static void main(String[] args) {
         try {
             WebSocketContainer container = ContainerProvider.getWebSocketContainer();
             try {
@@ -29,9 +31,9 @@ public class WebsocketClient {
         } catch (Throwable t) {
             t.printStackTrace(System.err);
         }
-    }
+    }*/
 
-    /*public WebsocketClient() {
+    public WebsocketClient() {
         try {
             WebSocketContainer container = ContainerProvider.getWebSocketContainer();
             try {
@@ -47,7 +49,7 @@ public class WebsocketClient {
         }
     }
 
-    public void sendMessage(JsonObject message) {
+    public void sendMessage(JSONObject message) {
         try {
             session.getBasicRemote().sendObject(message);
         }
@@ -67,9 +69,5 @@ public class WebsocketClient {
         {
             e.printStackTrace();
         }
-
-    }*/
-
-
-
+    }
 }

@@ -31,6 +31,7 @@ public class PlayState  extends State{
     private int y2;
 
     private int playerSize = 60;
+    private int playernumber;
 
     private ArrayList<Bullets> bullets;
     Bullets currentBullets;
@@ -47,9 +48,13 @@ public class PlayState  extends State{
         bg = new Texture("melkweg.jpg");
         textureship = new Texture("bottomtube.png");
         bullets = new ArrayList<>();
-        if(!firstToFire)
+        if(firstToFire)
         {
-            turnHandler.switchTurn();
+            playernumber = 0;
+        }
+        else
+        {
+            playernumber = 1;
         }
     }
 
@@ -62,8 +67,8 @@ public class PlayState  extends State{
 
 
                 Vector3 convertedInputPosition = cam.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-                if(bullets.isEmpty() && turnHandler.player1turn()){
-                    bullets.add(new Bullets(currentPlayer.getXPosition(), currentPlayer.getYPosition(), (int) (convertedInputPosition.x - currentPlayer.getXPosition()), (int) (convertedInputPosition.y - currentPlayer.getYPosition()), turnHandler.player1turn()));
+                if(bullets.isEmpty() && turnHandler.player1turn(playernumber)){
+                    bullets.add(new Bullets(currentPlayer.getXPosition(), currentPlayer.getYPosition(), (int) (convertedInputPosition.x - currentPlayer.getXPosition()), (int) (convertedInputPosition.y - currentPlayer.getYPosition()), turnHandler.player1turn(playernumber)));
                     turnHandler.switchTurn();
                 }
             }

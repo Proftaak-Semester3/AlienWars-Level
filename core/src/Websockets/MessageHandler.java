@@ -6,12 +6,12 @@ import org.json.JSONObject;
 
 public class MessageHandler {
     private WebsocketClient webSocket;
-    public MessageHandler(/*WebsocketClient websocket*/)
+    public MessageHandler(WebsocketClient websocket)
     {
-        /*this.webSocket = websocket;*/
+        this.webSocket = websocket;
     }
 
-    public JSONObject createBulletMessage(float x, float y, int horizontal, int vertical, boolean player1Turn)
+    public void createBulletMessage(float x, float y, int horizontal, int vertical, boolean player1Turn)
     {
         JSONObject json = new JSONObject();
         try
@@ -27,9 +27,7 @@ public class MessageHandler {
         {
             e.printStackTrace();
         }
-
-        return json;
-       /* sendMessage(json);*/
+        webSocket.sendMessage(json);
     }
 
 /*    private void sendMessage(JsonObject json)

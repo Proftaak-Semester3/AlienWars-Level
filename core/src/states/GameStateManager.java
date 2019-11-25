@@ -42,4 +42,6 @@ public class GameStateManager {
     {
         states.peek().render(sb);
     }
+
+    public State getCurrentState() { return states.peek(); }
 }

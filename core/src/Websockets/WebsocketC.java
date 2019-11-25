@@ -1,5 +1,7 @@
 package Websockets;
 
+import org.json.JSONObject;
+
 import javax.websocket.*;
 
 @ClientEndpoint
@@ -12,6 +14,15 @@ public class WebsocketC {
     @OnMessage
     public void onWebSocketText(String message) {
         System.out.println("[Received]: " + message);
+        JSONObject json = null;
+        try {
+            json = new JSONObject(message);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        MessageController.handleMessage(json);
     }
     @OnClose
     public void onWebSocketClose(CloseReason reason) {
