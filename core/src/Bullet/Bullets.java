@@ -56,7 +56,8 @@ public class Bullets {
     public void update(float deltaTime){
 
         if(position.y > 0){
-            velocity.add(0, velocityMultiplier* GRAVITY,0);}
+            velocity.add(0, velocityMultiplier* GRAVITY,0);
+        }
 
 
         velocity.scl(deltaTime);
