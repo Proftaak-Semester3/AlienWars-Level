@@ -8,7 +8,7 @@ import javax.websocket.WebSocketContainer;
 import java.net.URI;
 
 public class WebsocketClient {
-    private final static String uri = "ws://localhost:8095/alien/";
+    private final static String uri = "ws://localhost:8096/alien/";
     private Session session;
 
  /*   public static void main(String[] args) {
