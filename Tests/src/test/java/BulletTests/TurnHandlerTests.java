@@ -1,4 +1,4 @@
-package java.BulletTests;
+package BulletTests;
 
 import Bullet.TurnHandler;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package java.BulletTests;
+package BulletTests;
 
 import Bullet.CollisionRect;
 import org.junit.jupiter.api.Test;
