@@ -31,8 +31,7 @@ public final class MessageController {
                 int horizontal = json.getInt("horizontal");
                 int vertical = json.getInt("vertical");
                 boolean player1turn = json.getBoolean("player1turn");
-                Bullets bullet = new Bullets(x,y,horizontal,vertical,player1turn);
-                playState.enemyMove(bullet);
+                playState.enemyMove(x,y,horizontal,vertical,player1turn);
             }
         }
         catch (Exception e)

@@ -198,9 +198,9 @@ public class PlayState  extends State{
         bg.dispose();
     }
 
-    public void enemyMove(Bullets bullet)
+    public void enemyMove(float x, float y, int horizontal, int vertical, boolean player1Turn)
     {
-        bullets.add(bullet);
+        bullets.add(new Bullets(x,y,horizontal,vertical,player1Turn));
         turnHandler.switchTurn();
     }
 }
