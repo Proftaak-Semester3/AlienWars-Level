@@ -33,7 +33,7 @@ public class PlayState  extends State{
     private int playernumber;
 
     private ArrayList<Bullets> bullets;
-    Bullets currentBullets;
+    Bullets currentBullet;
 
 
     protected PlayState(GameStateManager gsm, boolean firstToFire, messageCreator messageCreator) {
@@ -125,6 +125,10 @@ public class PlayState  extends State{
             gsm.set(new MenuState(gsm));
             dispose();
         }
+        if(currentBullet != null)
+        {
+            bullets.add(currentBullet);
+        }
 
         removeBullets(dt);
     }
@@ -178,6 +182,7 @@ public class PlayState  extends State{
 
         cam.update();
         sb.setProjectionMatrix(cam.combined);
+
         sb.begin();
         sb.draw(bg, 0, 0, AlienDemo.WIDTH , AlienDemo.HEIGHT);
         sb.draw(turnHandler.getPlayer1().getTexture(), turnHandler.getPlayer1().getXPosition(), turnHandler.getPlayer1().getYPosition(), -playerSize, playerSize * 1.8f);
@@ -185,6 +190,7 @@ public class PlayState  extends State{
         turnHandler.getPlayer1().getHealthbar().render(sb);
         turnHandler.getPlayer2().getHealthbar().render(sb);
         for (Bullets bullets : this.bullets) {
+            bullets.setTexture();
             bullets.render(sb);
         }
         sb.draw(textureship, (x1 - 60), (y1 - 20), 100, 10);
