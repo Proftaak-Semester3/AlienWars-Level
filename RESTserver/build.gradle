@@ -23,7 +23,7 @@ dependencies {
     // https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-server
     compile group: 'org.glassfish.jersey.core', name: 'jersey-server', version: '2.27'
     // https://mvnrepository.com/artifact/org.glassfish.jersey.containers/jersey-container-servlet
-    compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet', version: '2.27'
+    compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-jetty-servlet', version: '2.27'
     // https://mvnrepository.com/artifact/org.glassfish.jersey.inject/jersey-hk2
     compile group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: '2.27'
 
