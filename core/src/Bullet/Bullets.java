@@ -41,10 +41,8 @@ public class Bullets {
         velocity = new Vector3(horizontalSpeed, verticalSpeed,0);
 
         this.rect = new CollisionRect(x, y, size, size);
-        if(texture == null)
-        {
-            texture = new Texture("Tennisbal.png");
-        }
+
+        texture = new Texture("Tennisbal.png");
     }
 
     public void update(float deltaTime){
