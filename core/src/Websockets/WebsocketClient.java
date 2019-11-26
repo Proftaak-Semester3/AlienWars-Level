@@ -10,6 +10,7 @@ import java.net.URI;
 public class WebsocketClient {
     private final static String uri = "ws://localhost:8096/alien/";
     private Session session;
+    private messageCreator messageCreator;
 
  /*   public static void main(String[] args) {
         try {
@@ -18,7 +19,7 @@ public class WebsocketClient {
                 // Attempt Connect
                 Session session = container.connectToServer(WebsocketC.class, new URI(uri));
                 // Send a message
-                MessageHandler handler = new MessageHandler();
+                messageCreator handler = new messageCreator();
                 session.getBasicRemote().sendObject(handler.createBulletMessage(5,5,10,10,true));
                 // Close session
                 Thread.sleep(10000);
@@ -47,9 +48,10 @@ public class WebsocketClient {
         } catch (Exception t) {
             t.printStackTrace();
         }
+        messageCreator = new messageCreator(this);
     }
 
-    public void sendMessage(JSONObject message) {
+    void sendMessage(JSONObject message) {
         try {
             session.getBasicRemote().sendObject(message);
         }
@@ -69,5 +71,10 @@ public class WebsocketClient {
         {
             e.printStackTrace();
         }
+    }
+
+    public messageCreator getMessageCreator()
+    {
+        return messageCreator;
     }
 }

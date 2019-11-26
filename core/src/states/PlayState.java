@@ -2,8 +2,7 @@ package states;
 
 import Bullet.*;
 import Render.AlienDemo;
-import Websockets.WebsocketC;
-import Websockets.WebsocketClient;
+import Websockets.messageCreator;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -22,7 +21,7 @@ public class PlayState  extends State{
     private Texture textureship;
     private OrthographicCamera cam;
     private GameStateManager gsm;
-    private WebsocketClient client;
+    private messageCreator messageCreator;
     private boolean justonce;
     private boolean waiting;
     private int x1;
@@ -37,9 +36,9 @@ public class PlayState  extends State{
     Bullets currentBullets;
 
 
-    protected PlayState(GameStateManager gsm, boolean firstToFire, WebsocketClient client) {
+    protected PlayState(GameStateManager gsm, boolean firstToFire, messageCreator messageCreator) {
         super(gsm);
-        this.client = client;
+        this.messageCreator = messageCreator;
         this.gsm = gsm;
         justonce = true;
         turnHandler = new TurnHandler();
@@ -69,12 +68,14 @@ public class PlayState  extends State{
                 Vector3 convertedInputPosition = cam.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
                 if(bullets.isEmpty() && turnHandler.player1turn(playernumber)){
                     bullets.add(new Bullets(currentPlayer.getXPosition(), currentPlayer.getYPosition(), (int) (convertedInputPosition.x - currentPlayer.getXPosition()), (int) (convertedInputPosition.y - currentPlayer.getYPosition()), turnHandler.player1turn(playernumber)));
+                    messageCreator.createBulletMessage(currentPlayer.getXPosition(), currentPlayer.getYPosition(), (int) (convertedInputPosition.x - currentPlayer.getXPosition()), (int) (convertedInputPosition.y - currentPlayer.getYPosition()), turnHandler.player1turn(playernumber));
                     turnHandler.switchTurn();
                 }
             }
         }
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE))
         {
+            messageCreator.close();
             Gdx.app.exit();
         }
 

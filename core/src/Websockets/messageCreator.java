@@ -4,9 +4,9 @@ import Websockets.WebsocketClient;
 import org.json.JSONObject;
 
 
-public class MessageHandler {
+public class messageCreator {
     private WebsocketClient webSocket;
-    public MessageHandler(WebsocketClient websocket)
+    public messageCreator(WebsocketClient websocket)
     {
         this.webSocket = websocket;
     }
@@ -28,6 +28,11 @@ public class MessageHandler {
             e.printStackTrace();
         }
         webSocket.sendMessage(json);
+    }
+
+    public void close()
+    {
+        webSocket.closeConnection();
     }
 
 /*    private void sendMessage(JsonObject json)

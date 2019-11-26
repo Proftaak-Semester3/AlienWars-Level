@@ -1,7 +1,9 @@
 package Websockets;
 
+import Bullet.Bullets;
 import org.json.JSONObject;
 import states.GameStateManager;
+import states.PlayState;
 import states.QueueState;
 
 public final class MessageController {
@@ -23,7 +25,14 @@ public final class MessageController {
             }
             else if(json.getString("task").equals("bullet"))
             {
-
+                PlayState playState = (PlayState) gsm.getCurrentState();
+                int x = json.getInt("x");
+                int y = json.getInt("y");
+                int horizontal = json.getInt("horizontal");
+                int vertical = json.getInt("vertical");
+                boolean player1turn = json.getBoolean("player1turn");
+                Bullets bullet = new Bullets(x,y,horizontal,vertical,player1turn);
+                playState.enemyMove(bullet);
             }
         }
         catch (Exception e)

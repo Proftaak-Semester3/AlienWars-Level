@@ -1,5 +1,6 @@
 package states;
 
+import Websockets.messageCreator;
 import Websockets.WebsocketClient;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -8,20 +9,22 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class QueueState extends State {
     private BitmapFont font;
-    private WebsocketClient client;
+    private messageCreator messageCreator;
     private boolean matchFound = false;
     private boolean firstToFire;
 
     protected QueueState(GameStateManager gsm) {
         super(gsm);
         font = new BitmapFont();
-        client = new WebsocketClient();
+        WebsocketClient client = new WebsocketClient();
+        messageCreator = client.getMessageCreator();
     }
 
     @Override
     protected void handleInput() {
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE))
         {
+            messageCreator.close();
             Gdx.app.exit();
         }
     }
@@ -30,7 +33,7 @@ public class QueueState extends State {
     public void update(float dt) {
         if(matchFound)
         {
-            gsm.push(new PlayState(gsm, firstToFire, client));
+            gsm.push(new PlayState(gsm, firstToFire, messageCreator));
         }
         handleInput();
     }
