@@ -4,6 +4,7 @@ public class AccountDTO {
     private int accountID;
     private String username;
     private String password;
+    private String emailRegister;
 
     public AccountDTO() {
     }
@@ -14,27 +15,17 @@ public class AccountDTO {
         this.password = password;
     }
 
-    public void setAccountID(int accountID) {
-        this.accountID = accountID;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public int getAccountID() {
-        return accountID;
-    }
-
     public String getUsername() {
         return username;
     }
 
     public String getPassword() {
         return password;
+    }
+
+    public String getEmailRegister() {return emailRegister; }
+
+    public int getAccountID() {
+        return accountID;
     }
 }

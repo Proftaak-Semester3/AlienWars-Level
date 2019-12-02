@@ -15,15 +15,20 @@ public class AlienwarsLogin {
 
     private DbClass dbClass = new DbClass();
 
-    public void register(String userName, String password, String email){
-        String hashedPassword = HashingClass.hashPassword(password);
-        Map<Integer, Object> map = new HashMap<Integer, Object>();
-        map.put(1, userName);
-        map.put(2, hashedPassword);
-        map.put(3, email);
-        String procedure = "INSERT INTO [dbo].[User] (userName, password, email) VALUES(?,?,?)";
+    public boolean register(String userName, String password, String email){
+        try{
+            String hashedPassword = HashingClass.hashPassword(password);
+            Map<Integer, Object> map = new HashMap<Integer, Object>();
+            map.put(1, userName);
+            map.put(2, hashedPassword);
+            map.put(3, email);
+            String procedure = "INSERT INTO [dbo].[User] (userName, password, email) VALUES(?,?,?)";
 
-        dbClass.executeNonQuery(procedure, map);
+            dbClass.executeNonQuery(procedure, map);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 
     public boolean login(String userName, String inputPassword){

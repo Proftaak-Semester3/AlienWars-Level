@@ -8,12 +8,7 @@ import java.util.Map;
 
 public class DbClass {
 
-    final private String hostName = "alien-wars.database.windows.net:1433"; // update me
-    final private String dbName = "AlienWars"; // update me
-    final private String user = "odin"; // update me
-    final private String password = "Piks123="; // update me
-    private String url = String.format("jdbc:sqlserver://%s:1433;database=%s;user=%s;password=%s;encrypt=true;"
-            + "hostNameInCertificate=*.database.windows.net;loginTimeout=30;", hostName, dbName, user, password);
+    private String url;
     private Connection connection = null;
 
     public DbClass(){
