@@ -73,7 +73,6 @@ public class PlayState  extends State{
                     bullets.add(new Bullets(currentPlayer.getXPosition(), currentPlayer.getYPosition(), (int) (convertedInputPosition.x - currentPlayer.getXPosition()), (int) (convertedInputPosition.y - currentPlayer.getYPosition()), yourTurn));
                     messageCreator.createBulletMessage(currentPlayer.getXPosition(), currentPlayer.getYPosition(), (int) (convertedInputPosition.x - currentPlayer.getXPosition()), (int) (convertedInputPosition.y - currentPlayer.getYPosition()), yourTurn);
                     turnHandler.switchTurn();
-                    yourTurn = !yourTurn;
                 }
             }
         }
@@ -211,6 +210,5 @@ public class PlayState  extends State{
     {
         bullets.add(new Bullets(x,y,horizontal,vertical,player1Turn));
         turnHandler.switchTurn();
-        yourTurn = !yourTurn;
     }
 }
