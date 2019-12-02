@@ -37,7 +37,7 @@ public class PlayState  extends State{
         this.gsm = gsm;
         justonce = true;
         turnHandler = new TurnHandler();
-        cam = new OrthographicCamera(AlienDemo.WIDTH /1.5F , AlienDemo.HEIGHT / 1.5F);
+        cam = new OrthographicCamera(AlienDemo.WIDTH /1.5F , AlienDemo.HEIGHT/1.5F);
         cam.update();
         bg = new Texture("melkweg.jpg");
         textureship = new Texture("bottomtube.png");

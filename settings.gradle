@@ -1,4 +1,4 @@
 include 'desktop', 'core'
-include 'Tests'
-include 'Tests'
+include 'RESTserver'
+include 'AlienWarsShared'
 
