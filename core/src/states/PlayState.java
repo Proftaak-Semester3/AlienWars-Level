@@ -78,7 +78,6 @@ public class PlayState  extends State{
             messageCreator.close();
             Gdx.app.exit();
         }
-
     }
 
     @Override
