@@ -2,6 +2,7 @@ package states;
 
 import Bullet.*;
 import Render.AlienDemo;
+import Websockets.messageCreator;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -20,20 +21,25 @@ public class PlayState  extends State{
     private Texture textureship;
     private OrthographicCamera cam;
     private GameStateManager gsm;
+    private messageCreator messageCreator;
     private boolean justonce;
+    private boolean waiting;
+    private boolean yourTurn;
     private int x1;
     private int x2;
     private int y1;
     private int y2;
 
     private int playerSize = 60;
+    private int playernumber;
 
     private ArrayList<Bullets> bullets;
-    Bullets currentBullets;
+    Bullets currentBullet;
 
 
-    protected PlayState(GameStateManager gsm) {
+    protected PlayState(GameStateManager gsm, boolean firstToFire, messageCreator messageCreator) {
         super(gsm);
+        this.messageCreator = messageCreator;
         this.gsm = gsm;
         justonce = true;
         turnHandler = new TurnHandler();
@@ -42,6 +48,16 @@ public class PlayState  extends State{
         bg = new Texture("melkweg.jpg");
         textureship = new Texture("bottomtube.png");
         bullets = new ArrayList<>();
+        if(firstToFire)
+        {
+            playernumber = 0;
+            yourTurn = true;
+        }
+        else
+        {
+            playernumber = 1;
+            yourTurn = false;
+        }
     }
 
     @Override
@@ -51,18 +67,20 @@ public class PlayState  extends State{
             if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 Player currentPlayer = turnHandler.getCurrentPlayer();
 
+
                 Vector3 convertedInputPosition = cam.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-                if(bullets.isEmpty()){
-                    bullets.add(new Bullets(currentPlayer.getXPosition(), currentPlayer.getYPosition(), (int) (convertedInputPosition.x - currentPlayer.getXPosition()), (int) (convertedInputPosition.y - currentPlayer.getYPosition()), turnHandler.player1turn()));
+                if(bullets.isEmpty() && turnHandler.player1turn(playernumber)){
+                    bullets.add(new Bullets(currentPlayer.getXPosition(), currentPlayer.getYPosition(), (int) (convertedInputPosition.x - currentPlayer.getXPosition()), (int) (convertedInputPosition.y - currentPlayer.getYPosition()), yourTurn));
+                    messageCreator.createBulletMessage(currentPlayer.getXPosition(), currentPlayer.getYPosition(), (int) (convertedInputPosition.x - currentPlayer.getXPosition()), (int) (convertedInputPosition.y - currentPlayer.getYPosition()), yourTurn);
                     turnHandler.switchTurn();
                 }
             }
         }
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE))
         {
+            messageCreator.close();
             Gdx.app.exit();
         }
-
     }
 
     @Override
@@ -109,6 +127,10 @@ public class PlayState  extends State{
             cam.update();
             gsm.set(new MenuState(gsm));
             dispose();
+        }
+        if(currentBullet != null)
+        {
+            bullets.add(currentBullet);
         }
 
         removeBullets(dt);
@@ -163,6 +185,7 @@ public class PlayState  extends State{
 
         cam.update();
         sb.setProjectionMatrix(cam.combined);
+
         sb.begin();
         sb.draw(bg, 0, 0, AlienDemo.WIDTH , AlienDemo.HEIGHT);
         sb.draw(turnHandler.getPlayer1().getTexture(), turnHandler.getPlayer1().getXPosition(), turnHandler.getPlayer1().getYPosition(), -playerSize, playerSize * 1.8f);
@@ -170,6 +193,7 @@ public class PlayState  extends State{
         turnHandler.getPlayer1().getHealthbar().render(sb);
         turnHandler.getPlayer2().getHealthbar().render(sb);
         for (Bullets bullets : this.bullets) {
+            bullets.setTexture();
             bullets.render(sb);
         }
         sb.draw(textureship, (x1 - 60), (y1 - 20), 100, 10);
@@ -180,5 +204,11 @@ public class PlayState  extends State{
     @Override
     public void dispose() {
         bg.dispose();
+    }
+
+    public void enemyMove(float x, float y, int horizontal, int vertical, boolean player1Turn)
+    {
+        bullets.add(new Bullets(x,y,horizontal,vertical,player1Turn));
+        turnHandler.switchTurn();
     }
 }

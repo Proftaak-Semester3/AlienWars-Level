@@ -1,16 +1,20 @@
 package states;
 
+import Websockets.MessageController;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.Stack;
 
 public class GameStateManager {
 
+    private MessageController controller;
+
     private Stack<State> states;
 
     public GameStateManager()
     {
         states = new Stack<>();
+        controller = new MessageController(this);
     }
 
     public void push(State state)
@@ -38,4 +42,6 @@ public class GameStateManager {
     {
         states.peek().render(sb);
     }
+
+    public State getCurrentState() { return states.peek(); }
 }
