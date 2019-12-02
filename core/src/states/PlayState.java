@@ -24,6 +24,7 @@ public class PlayState  extends State{
     private messageCreator messageCreator;
     private boolean justonce;
     private boolean waiting;
+    private boolean yourTurn;
     private int x1;
     private int x2;
     private int y1;
@@ -50,10 +51,12 @@ public class PlayState  extends State{
         if(firstToFire)
         {
             playernumber = 0;
+            yourTurn = true;
         }
         else
         {
             playernumber = 1;
+            yourTurn = false;
         }
     }
 
@@ -70,6 +73,7 @@ public class PlayState  extends State{
                     bullets.add(new Bullets(currentPlayer.getXPosition(), currentPlayer.getYPosition(), (int) (convertedInputPosition.x - currentPlayer.getXPosition()), (int) (convertedInputPosition.y - currentPlayer.getYPosition()), turnHandler.player1turn(playernumber)));
                     messageCreator.createBulletMessage(currentPlayer.getXPosition(), currentPlayer.getYPosition(), (int) (convertedInputPosition.x - currentPlayer.getXPosition()), (int) (convertedInputPosition.y - currentPlayer.getYPosition()), turnHandler.player1turn(playernumber));
                     turnHandler.switchTurn();
+                    yourTurn = !yourTurn;
                 }
             }
         }
@@ -207,5 +211,6 @@ public class PlayState  extends State{
     {
         bullets.add(new Bullets(x,y,horizontal,vertical,player1Turn));
         turnHandler.switchTurn();
+        yourTurn = !yourTurn;
     }
 }

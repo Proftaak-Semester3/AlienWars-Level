@@ -39,7 +39,7 @@ public class TurnHandler {
     }
 
     public boolean player1turn(int playernumber){
-        return currentPlayer.getPlayerNumber() == playernumber;
+        return (currentPlayer.getPlayerNumber() == playernumber);
     }
 
 }
