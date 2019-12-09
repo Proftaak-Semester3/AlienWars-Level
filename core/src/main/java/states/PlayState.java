@@ -7,8 +7,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import com.badlogic.gdx.math.Vector3;
+import gameChecks.CameraUpdate;
 import gameChecks.CollisionChecks;
 import objects.Player;
 import render.AlienDemo;
@@ -16,12 +16,14 @@ import websockets.messageCreator;
 
 import java.util.ArrayList;
 
-public class PlayState  extends State{
+public class PlayState extends State {
 
+    Bullets currentBullet;
     private TurnHandler turnHandler;
     private Texture bg;
     private Texture textureship;
     private CollisionChecks collisionChecks;
+    private CameraUpdate camUpdate;
     private OrthographicCamera cam;
     private GameStateManager gsm;
     private websockets.messageCreator messageCreator;
@@ -32,33 +34,28 @@ public class PlayState  extends State{
     private int x2;
     private int y1;
     private int y2;
-
     private int playerSize = 60;
     private int playernumber;
-
     private ArrayList<Bullets> bullets;
-    Bullets currentBullet;
 
 
     protected PlayState(GameStateManager gsm, boolean firstToFire, messageCreator messageCreator) {
         super(gsm);
         this.collisionChecks = new CollisionChecks();
+        this.camUpdate = new CameraUpdate();
         this.messageCreator = messageCreator;
         this.gsm = gsm;
         justonce = true;
         turnHandler = new TurnHandler();
-        cam = new OrthographicCamera(AlienDemo.WIDTH /1.5F , AlienDemo.HEIGHT/1.5F);
+        cam = new OrthographicCamera(AlienDemo.WIDTH / 1.5F, AlienDemo.HEIGHT / 1.5F);
         cam.update();
         bg = new Texture("melkweg.jpg");
         textureship = new Texture("bottomtube.png");
         bullets = new ArrayList<>();
-        if(firstToFire)
-        {
+        if (firstToFire) {
             playernumber = 0;
             yourTurn = true;
-        }
-        else
-        {
+        } else {
             playernumber = 1;
             yourTurn = false;
         }
@@ -66,20 +63,18 @@ public class PlayState  extends State{
 
     @Override
     protected void handleInput() {
-        if(Gdx.input.justTouched())
-        {
-            if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+        if (Gdx.input.justTouched()) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 Player currentPlayer = turnHandler.getCurrentPlayer();
                 Vector3 convertedInputPosition = cam.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-                if(bullets.isEmpty() && turnHandler.player1turn(playernumber)){
+                if (bullets.isEmpty() && turnHandler.player1turn(playernumber)) {
                     bullets.add(new Bullets(currentPlayer.getXPosition(), currentPlayer.getYPosition(), (int) (convertedInputPosition.x - currentPlayer.getXPosition()), (int) (convertedInputPosition.y - currentPlayer.getYPosition()), yourTurn));
                     messageCreator.createBulletMessage(currentPlayer.getXPosition(), currentPlayer.getYPosition(), (int) (convertedInputPosition.x - currentPlayer.getXPosition()), (int) (convertedInputPosition.y - currentPlayer.getYPosition()), yourTurn);
                     turnHandler.switchTurn();
                 }
             }
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE))
-        {
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             messageCreator.close();
             Gdx.app.exit();
         }
@@ -88,36 +83,33 @@ public class PlayState  extends State{
     @Override
     public void update(float dt) {
         handleInput();
-        
+
         cam.update();
         for (Bullets bullets : this.bullets) {
-           collisionChecks.checkCollision(bullets, turnHandler);
+            collisionChecks.checkCollision(bullets, turnHandler);
         }
         turnHandler.getPlayer1().update(dt);
         turnHandler.getPlayer2().update(dt);
 
-        if(turnHandler.getPlayer1().isDead() || turnHandler.getPlayer2().isDead())
-        {
-            cam = new OrthographicCamera(AlienDemo.WIDTH , AlienDemo.HEIGHT);
+        if (turnHandler.getPlayer1().isDead() || turnHandler.getPlayer2().isDead()) {
+            cam = new OrthographicCamera(AlienDemo.WIDTH, AlienDemo.HEIGHT);
             cam.update();
             gsm.set(new MenuState(gsm));
             dispose();
         }
-        if(currentBullet != null)
-        {
+        if (currentBullet != null) {
             bullets.add(currentBullet);
         }
 
         removeBullets(dt);
     }
 
-    public void removeBullets(float dt){
+    public void removeBullets(float dt) {
         ArrayList<Bullets> bulletsToRemove = new ArrayList<>();
 
         for (Bullets bullets : this.bullets) {
             bullets.update(dt);
-            if(bullets.remove)
-            {
+            if (bullets.remove) {
                 bulletsToRemove.add(bullets);
             }
         }
@@ -125,44 +117,22 @@ public class PlayState  extends State{
         bullets.removeAll(bulletsToRemove);
     }
 
-    private void updateCameraPosition(){
-        Vector3 camPosition = new Vector3();
-
-        float camMinX = cam.viewportWidth / 2;
-        float camMinY = cam.viewportHeight / 2;
-
-        float camMaxX = AlienDemo.WIDTH - (cam.viewportWidth / 2);
-        float camMaxY = AlienDemo.HEIGHT - (cam.viewportHeight / 2);
-
-        if(!bullets.isEmpty()){
-            cam.position.set(bullets.get(0).getPosition().x, bullets.get(0).getPosition().y, 0);
-        }
-        else{
-            cam.position.set(turnHandler.getCurrentPlayer().getXPosition(), turnHandler.getCurrentPlayer().getYPosition(), 0);
-        }
-
-        camPosition.x = Math.min(camMaxX, Math.max(camMinX, cam.position.x));
-        camPosition.y = Math.min(camMaxY, Math.max(camMinY, cam.position.y));
-
-        cam.position.set(camPosition);
-    }
-
     @Override
     public void render(SpriteBatch sb) {
-        if(justonce) {
+        if (justonce) {
             x1 = (int) turnHandler.getPlayer1().getXPosition();
             y1 = (int) turnHandler.getPlayer1().getYPosition();
             x2 = (int) turnHandler.getPlayer2().getXPosition();
             y2 = (int) turnHandler.getPlayer2().getYPosition();
             justonce = false;
         }
-        updateCameraPosition();
+        camUpdate.cameraUpdate(cam, turnHandler, bullets);
 
         cam.update();
         sb.setProjectionMatrix(cam.combined);
 
         sb.begin();
-        sb.draw(bg, 0, 0, AlienDemo.WIDTH , AlienDemo.HEIGHT);
+        sb.draw(bg, 0, 0, AlienDemo.WIDTH, AlienDemo.HEIGHT);
         sb.draw(turnHandler.getPlayer1().getTexture(), turnHandler.getPlayer1().getXPosition(), turnHandler.getPlayer1().getYPosition(), -playerSize, playerSize * 1.8f);
         sb.draw(turnHandler.getPlayer2().getTexture(), turnHandler.getPlayer2().getXPosition(), turnHandler.getPlayer2().getYPosition(), playerSize, playerSize * 1.8f);
         turnHandler.getPlayer1().getHealthbar().render(sb);
@@ -181,9 +151,8 @@ public class PlayState  extends State{
         bg.dispose();
     }
 
-    public void enemyMove(float x, float y, int horizontal, int vertical, boolean player1Turn)
-    {
-        bullets.add(new Bullets(x,y,horizontal,vertical,player1Turn));
+    public void enemyMove(float x, float y, int horizontal, int vertical, boolean player1Turn) {
+        bullets.add(new Bullets(x, y, horizontal, vertical, player1Turn));
         turnHandler.switchTurn();
     }
 }
