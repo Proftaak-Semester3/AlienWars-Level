@@ -1,4 +1,4 @@
-import Bullet.Bullets;
+/*import Bullet.Bullets;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import com.badlogic.gdx.math.Vector3;
@@ -10,4 +10,4 @@ public class BulletsTests {
         assertEquals(5, bullets.getPosition().x);
         assertEquals(5, bullets.getPosition().y);
     }
-}
+}*/
