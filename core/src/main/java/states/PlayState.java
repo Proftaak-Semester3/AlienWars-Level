@@ -195,8 +195,8 @@ public class PlayState  extends State{
             bullets.setTexture();
             bullets.render(sb);
         }
-        sb.draw(textureship, (x1 - 60), (y1 - 20), 100, 10);
-        sb.draw(textureship, (x2 - 60), (y2 - 20), 100, 10);
+        sb.draw(textureship, (x1 - 60), (y1 - 70), 100, 81.4f);
+        sb.draw(textureship, (x2 - 60), (y2 - 70), 100, 81.4f);
         sb.end();
     }
 
