@@ -46,7 +46,7 @@ public class PlayState  extends State{
         cam = new OrthographicCamera(AlienDemo.WIDTH /1.5F , AlienDemo.HEIGHT/1.5F);
         cam.update();
         bg = new Texture("melkweg.jpg");
-        textureship = new Texture("bottomtube.png");
+        textureship = new Texture("Platform.png");
         bullets = new ArrayList<>();
         if(firstToFire)
         {
