@@ -1,15 +1,14 @@
 package states;
 
-import Websockets.messageCreator;
-import Websockets.WebsocketClient;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import websockets.WebsocketClient;
 
 public class QueueState extends State {
     private BitmapFont font;
-    private messageCreator messageCreator;
+    private websockets.messageCreator messageCreator;
     private boolean matchFound = false;
     private boolean firstToFire;
 

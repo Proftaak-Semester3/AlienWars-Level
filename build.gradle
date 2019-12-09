@@ -26,6 +26,7 @@ allprojects {
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.7.0'
         aiVersion = '1.8.0'
+        junitVersion = '4.12'
     }
 
     repositories {
@@ -62,7 +63,7 @@ project(":core") {
         compile group: 'javax.websocket', name: 'javax.websocket-api', version: '1.1'
         compile group: 'org.glassfish.tyrus.bundles', name: 'tyrus-standalone-client', version: '1.9'
         compile group: 'org.json', name: 'json', version: '20090211'
-
+        testCompile "junit:junit:$junitVersion"
 
     }
 }

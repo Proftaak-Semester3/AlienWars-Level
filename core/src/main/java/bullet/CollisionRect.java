@@ -1,4 +1,4 @@
-package Bullet;
+package bullet;
 
 public class CollisionRect {
     private float x;
