@@ -15,7 +15,8 @@ public class Player {
     private Vector3 velocity;
     private boolean isDead;
 
-    private CollisionRect ship;
+    private Platform ship;
+    private float shipScale = 2f;
 
     private int health;
     private boolean onship = false;
@@ -26,7 +27,9 @@ public class Player {
     private Texture playerTexture;
     private int playerNumber;
 
-
+    public Platform GetShip(){
+        return ship;
+    }
 
     public Player(String file, float x, float y, int number) {
         playerTexture = new Texture(file);
@@ -45,7 +48,7 @@ public class Player {
             rect = new CollisionRect(x, y, 60, 60);
             healthbar = new Healthbar((int)position.x, (int)(position.y + 100), health, number);
         }
-        ship = new CollisionRect(x - 60, y - 20, 100, 10);
+        ship = new Platform(rect.getCenter().x - (1.6f * shipScale) * (rect.getWidth() / 2), y - 62 * shipScale, (int)(100 * shipScale), (int)(81 * shipScale), "Platform.png");
     }
 
     public Texture getTexture() {
@@ -55,7 +58,7 @@ public class Player {
     public void update(float deltaTime)
     {
         if (position.x > Gdx.graphics.getWidth() || position.y < 0 || position.x < 0 || health <= 0) { isDead = true; }
-        if(rect.collidesWith(ship))
+        if(rect.collidesWith(ship.getCollider()))
         {
             onship = true;
             velocity = new Vector3(velocity.x, 0, velocity.z);
