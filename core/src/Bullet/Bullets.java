@@ -81,7 +81,7 @@ public class Bullets {
     {
         if(texture == null)
         {
-            texture = new Texture("Tennisbal.png");
+            texture = new Texture("NormalBullet.png");
         }
     }
 }
