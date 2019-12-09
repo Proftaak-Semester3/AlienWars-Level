@@ -1,20 +1,20 @@
 package states;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import websockets.MessageController;
+import websockets.websocket.handlerContext;
 
 import java.util.Stack;
 
 public class GameStateManager {
 
-    private MessageController controller;
+    private handlerContext controller;
 
     private Stack<State> states;
 
     public GameStateManager()
     {
         states = new Stack<>();
-        controller = new MessageController(this);
+        controller = new handlerContext(this);
     }
 
     public void push(State state)

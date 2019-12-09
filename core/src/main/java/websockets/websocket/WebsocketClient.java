@@ -1,6 +1,9 @@
-package websockets;
+package websockets.websocket;
 
 import org.json.JSONObject;
+import websockets.messageCreator.iJsonCreator;
+import websockets.messageCreator.messageCreator;
+import websockets.messageSender.MessageBroadcaster;
 
 import javax.websocket.ContainerProvider;
 import javax.websocket.Session;
@@ -10,7 +13,7 @@ import java.net.URI;
 public class WebsocketClient {
     private final static String uri = "ws://145.93.160.169:8096/alien/";
     private Session session;
-    private messageCreator messageCreator;
+    private iJsonCreator messageCreator;
 
  /*   public static void main(String[] args) {
         try {
@@ -49,9 +52,10 @@ public class WebsocketClient {
             t.printStackTrace();
         }
         messageCreator = new messageCreator(this);
+        MessageBroadcaster broadcaster = new MessageBroadcaster(session);
     }
 
-    void sendMessage(JSONObject message) {
+    public void sendMessage(JSONObject message) {
         try {
             session.getBasicRemote().sendObject(message);
         }
@@ -73,7 +77,7 @@ public class WebsocketClient {
         }
     }
 
-    public messageCreator getMessageCreator()
+    public iJsonCreator getMessageCreator()
     {
         return messageCreator;
     }

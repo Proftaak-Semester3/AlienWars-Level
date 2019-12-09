@@ -4,11 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import websockets.WebsocketClient;
+import websockets.messageCreator.iJsonCreator;
+import websockets.messageCreator.messageCreator;
+import websockets.websocket.WebsocketClient;
 
 public class QueueState extends State {
     private BitmapFont font;
-    private websockets.messageCreator messageCreator;
+    private iJsonCreator messageCreator;
     private boolean matchFound = false;
     private boolean firstToFire;
 
@@ -23,7 +25,6 @@ public class QueueState extends State {
     protected void handleInput() {
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE))
         {
-            messageCreator.close();
             Gdx.app.exit();
         }
     }

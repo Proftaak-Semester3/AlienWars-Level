@@ -12,7 +12,8 @@ import gameChecks.CameraUpdate;
 import gameChecks.CollisionChecks;
 import objects.Player;
 import render.AlienDemo;
-import websockets.messageCreator;
+import websockets.messageCreator.iJsonCreator;
+import websockets.messageSender.MessageBroadcaster;
 
 import java.util.ArrayList;
 
@@ -26,8 +27,8 @@ public class PlayState extends State {
     private CameraUpdate camUpdate;
     private OrthographicCamera cam;
     private GameStateManager gsm;
-    private websockets.messageCreator messageCreator;
-    private boolean justonce;
+    private iJsonCreator messageCreator;
+    private boolean serverconfirm;
     private boolean waiting;
     private boolean yourTurn;
     private int x1;
@@ -39,13 +40,13 @@ public class PlayState extends State {
     private ArrayList<Bullets> bullets;
 
 
-    protected PlayState(GameStateManager gsm, boolean firstToFire, messageCreator messageCreator) {
+    protected PlayState(GameStateManager gsm, boolean firstToFire, iJsonCreator messageCreator) {
         super(gsm);
         this.collisionChecks = new CollisionChecks();
         this.camUpdate = new CameraUpdate();
         this.messageCreator = messageCreator;
         this.gsm = gsm;
-        justonce = true;
+        serverconfirm = false;
         turnHandler = new TurnHandler();
         cam = new OrthographicCamera(AlienDemo.WIDTH / 1.5F, AlienDemo.HEIGHT / 1.5F);
         cam.update();
@@ -59,6 +60,11 @@ public class PlayState extends State {
             playernumber = 1;
             yourTurn = false;
         }
+        x1 = (int) turnHandler.getPlayer1().getXPosition();
+        y1 = (int) turnHandler.getPlayer1().getYPosition();
+        x2 = (int) turnHandler.getPlayer2().getXPosition();
+        y2 = (int) turnHandler.getPlayer2().getYPosition();
+        MessageBroadcaster.broadcast(messageCreator.startPositionMessage(x1,y1,x2,y2));
     }
 
     @Override
@@ -69,42 +75,43 @@ public class PlayState extends State {
                 Vector3 convertedInputPosition = cam.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
                 if (bullets.isEmpty() && turnHandler.player1turn(playernumber)) {
                     bullets.add(new Bullets(currentPlayer.getXPosition(), currentPlayer.getYPosition(), (int) (convertedInputPosition.x - currentPlayer.getXPosition()), (int) (convertedInputPosition.y - currentPlayer.getYPosition()), yourTurn));
-                    messageCreator.createBulletMessage(currentPlayer.getXPosition(), currentPlayer.getYPosition(), (int) (convertedInputPosition.x - currentPlayer.getXPosition()), (int) (convertedInputPosition.y - currentPlayer.getYPosition()), yourTurn);
+                    MessageBroadcaster.broadcast(messageCreator.bulletMessage(currentPlayer.getXPosition(), currentPlayer.getYPosition(), (int) (convertedInputPosition.x - currentPlayer.getXPosition()), (int) (convertedInputPosition.y - currentPlayer.getYPosition()), yourTurn));
                     turnHandler.switchTurn();
                 }
             }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            messageCreator.close();
             Gdx.app.exit();
         }
     }
 
     @Override
     public void update(float dt) {
-        handleInput();
+        if (serverconfirm) {
+            handleInput();
 
-        cam.update();
-        for (Bullets bullets : this.bullets) {
-            collisionChecks.checkCollision(bullets, turnHandler);
-        }
-        turnHandler.getPlayer1().update(dt);
-        turnHandler.getPlayer2().update(dt);
-
-        if (turnHandler.getPlayer1().isDead() || turnHandler.getPlayer2().isDead()) {
-            cam = new OrthographicCamera(AlienDemo.WIDTH, AlienDemo.HEIGHT);
             cam.update();
-            gsm.set(new MenuState(gsm));
-            dispose();
-        }
-        if (currentBullet != null) {
-            bullets.add(currentBullet);
-        }
+            for (Bullets bullets : this.bullets) {
+                collisionChecks.checkCollision(bullets, turnHandler);
+            }
+            turnHandler.getPlayer1().update(dt);
+            turnHandler.getPlayer2().update(dt);
 
-        removeBullets(dt);
+            if (turnHandler.getPlayer1().isDead() || turnHandler.getPlayer2().isDead()) {
+                cam = new OrthographicCamera(AlienDemo.WIDTH, AlienDemo.HEIGHT);
+                cam.update();
+                gsm.set(new MenuState(gsm));
+                dispose();
+            }
+            if (currentBullet != null) {
+                bullets.add(currentBullet);
+            }
+
+            removeBullets(dt);
+        }
     }
 
-    public void removeBullets(float dt) {
+    private void removeBullets(float dt) {
         ArrayList<Bullets> bulletsToRemove = new ArrayList<>();
 
         for (Bullets bullets : this.bullets) {
@@ -119,15 +126,7 @@ public class PlayState extends State {
 
     @Override
     public void render(SpriteBatch sb) {
-        if (justonce) {
-            x1 = (int) turnHandler.getPlayer1().getXPosition();
-            y1 = (int) turnHandler.getPlayer1().getYPosition();
-            x2 = (int) turnHandler.getPlayer2().getXPosition();
-            y2 = (int) turnHandler.getPlayer2().getYPosition();
-            justonce = false;
-        }
         camUpdate.cameraUpdate(cam, turnHandler, bullets);
-
         cam.update();
         sb.setProjectionMatrix(cam.combined);
 
@@ -154,5 +153,13 @@ public class PlayState extends State {
     public void enemyMove(float x, float y, int horizontal, int vertical, boolean player1Turn) {
         bullets.add(new Bullets(x, y, horizontal, vertical, player1Turn));
         turnHandler.switchTurn();
+    }
+
+    public void confirmServer(boolean confirm) {
+        if (!confirm) {
+            gsm.push(new MenuState(gsm));
+        } else {
+            serverconfirm = true;
+        }
     }
 }

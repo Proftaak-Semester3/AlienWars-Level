@@ -1,7 +1,6 @@
-package websockets;
+package websockets.websocket;
 
 import org.json.JSONObject;
-
 import javax.websocket.*;
 
 @ClientEndpoint
@@ -22,7 +21,7 @@ public class WebsocketC {
         {
             e.printStackTrace();
         }
-        MessageController.handleMessage(json);
+        handlerContext.processMessage(json);
     }
     @OnClose
     public void onWebSocketClose(CloseReason reason) {
