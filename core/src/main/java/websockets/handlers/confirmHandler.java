@@ -10,7 +10,7 @@ public class confirmHandler implements Handler {
         PlayState state = (PlayState) gsm.getCurrentState();
         boolean confirm = false;
         try {
-            confirm = json.getBoolean("confirm");
+            confirm = json.getBoolean("equal");
         }
         catch (Exception e)
         {

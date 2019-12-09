@@ -4,9 +4,9 @@ import org.json.JSONObject;
 import websockets.websocket.WebsocketClient;
 
 
-public class messageCreator implements iJsonCreator {
+public class MessageCreator implements iJsonCreator {
     private WebsocketClient webSocket;
-    public messageCreator(WebsocketClient websocket)
+    public MessageCreator(WebsocketClient websocket)
     {
         this.webSocket = websocket;
     }

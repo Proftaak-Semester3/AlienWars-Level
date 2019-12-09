@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import websockets.messageCreator.iJsonCreator;
-import websockets.messageCreator.messageCreator;
 import websockets.websocket.WebsocketClient;
 
 public class QueueState extends State {

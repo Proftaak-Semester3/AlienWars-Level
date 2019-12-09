@@ -2,7 +2,7 @@ package websockets.websocket;
 
 import org.json.JSONObject;
 import websockets.messageCreator.iJsonCreator;
-import websockets.messageCreator.messageCreator;
+import websockets.messageCreator.MessageCreator;
 import websockets.messageSender.MessageBroadcaster;
 
 import javax.websocket.ContainerProvider;
@@ -22,7 +22,7 @@ public class WebsocketClient {
                 // Attempt Connect
                 Session session = container.connectToServer(WebsocketC.class, new URI(uri));
                 // Send a message
-                messageCreator handler = new messageCreator();
+                MessageCreator handler = new MessageCreator();
                 session.getBasicRemote().sendObject(handler.createBulletMessage(5,5,10,10,true));
                 // Close session
                 Thread.sleep(10000);
@@ -51,18 +51,8 @@ public class WebsocketClient {
         } catch (Exception t) {
             t.printStackTrace();
         }
-        messageCreator = new messageCreator(this);
+        messageCreator = new MessageCreator(this);
         MessageBroadcaster broadcaster = new MessageBroadcaster(session);
-    }
-
-    public void sendMessage(JSONObject message) {
-        try {
-            session.getBasicRemote().sendObject(message);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
     }
 
     public void closeConnection()
