@@ -1,6 +1,6 @@
-package Objects;
+package objects;
 
-import Bullet.CollisionRect;
+import bullet.CollisionRect;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;

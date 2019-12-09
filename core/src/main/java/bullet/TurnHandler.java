@@ -1,7 +1,7 @@
-package Bullet;
+package bullet;
 
-import Objects.Player;
-import Render.AlienDemo;
+import objects.Player;
+import render.AlienDemo;
 
 public class TurnHandler {
 

@@ -1,6 +1,5 @@
-package Websockets;
+package websockets;
 
-import Websockets.WebsocketClient;
 import org.json.JSONObject;
 
 

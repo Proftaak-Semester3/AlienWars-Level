@@ -1,6 +1,5 @@
-package Websockets;
+package websockets;
 
-import Bullet.Bullets;
 import org.json.JSONObject;
 import states.GameStateManager;
 import states.PlayState;

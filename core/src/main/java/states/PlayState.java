@@ -1,16 +1,17 @@
 package states;
 
-import Bullet.*;
-import Render.AlienDemo;
-import Websockets.messageCreator;
+import bullet.Bullets;
+import bullet.TurnHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import Objects.Player;
 import com.badlogic.gdx.math.Vector3;
+import objects.Player;
+import render.AlienDemo;
+import websockets.messageCreator;
 
 import java.util.ArrayList;
 
@@ -21,7 +22,7 @@ public class PlayState  extends State{
     private Texture textureship;
     private OrthographicCamera cam;
     private GameStateManager gsm;
-    private messageCreator messageCreator;
+    private websockets.messageCreator messageCreator;
     private boolean justonce;
     private boolean waiting;
     private boolean yourTurn;

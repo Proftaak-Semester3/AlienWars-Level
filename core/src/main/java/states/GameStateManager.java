@@ -1,7 +1,7 @@
 package states;
 
-import Websockets.MessageController;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import websockets.MessageController;
 
 import java.util.Stack;
 
