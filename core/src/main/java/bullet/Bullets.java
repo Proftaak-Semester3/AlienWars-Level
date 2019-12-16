@@ -23,7 +23,7 @@ public class Bullets {
 
     CollisionRect rect;
 
-    public boolean remove = false;
+    private boolean remove = false;
 
     public Bullets(float x, float y, int horizontal, int vertical, boolean player1Turn){
         this.player1turn = player1Turn;
@@ -84,4 +84,5 @@ public class Bullets {
             texture = new Texture("NormalBullet.png");
         }
     }
+    public boolean isRemove() { return remove; }
 }
