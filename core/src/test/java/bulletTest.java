@@ -32,23 +32,23 @@ public class bulletTest {
     public void  setHitasTrue(){
         bullet.setHit(true);
 
-        assertEquals(bullet.isHit(), true);
+        assertEquals(true, bullet.isHit() );
     }
 
     @Test
     public void  setHitasFalse(){
         bullet.setHit(false);
 
-        assertEquals(bullet.isHit(), false);
+        assertEquals(false, bullet.isHit());
     }
 
 
 
 
-    @Test
-    public void testtest()
-    {
-        assertEquals("yes", "yes");
-        //hi ruben
-    }
+//    @Test
+//    public void testtest()
+//    {
+//        assertEquals("yes", "yes");
+//        //hi ruben
+//    }
 }
