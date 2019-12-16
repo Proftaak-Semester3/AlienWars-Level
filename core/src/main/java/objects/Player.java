@@ -27,12 +27,7 @@ public class Player {
     private Texture playerTexture;
     private int playerNumber;
 
-    public Platform GetShip(){
-        return ship;
-    }
-
-    public Player(String file, float x, float y, int number) {
-        playerTexture = new Texture(file);
+    public Player(float x, float y, int number) {
         isDead = false;
         position = new Vector3(x, y, 0);
         playerNumber = number;
@@ -95,6 +90,13 @@ public class Player {
     public Healthbar getHealthbar() { return  healthbar; }
     public void setHit(boolean hit) {  this.hit = hit;  }
     public boolean isDead() { return isDead; }
+    public Platform GetShip(){ return ship; }
+    public void setTexture()
+    {
+        if(playerTexture == null) {
+            playerTexture = new Texture("alien.png");
+        }
+    }
 
     private void checkDead()
     {

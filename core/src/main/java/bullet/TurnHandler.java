@@ -10,8 +10,10 @@ public class TurnHandler {
 
     public TurnHandler()
     {
-        player1 = new Player("alien.png",(AlienDemo.WIDTH / 10), (AlienDemo.HEIGHT / 7), 0);
-        player2 = new Player("alien.png", (AlienDemo.WIDTH - (AlienDemo.WIDTH / 5)), (AlienDemo.HEIGHT / 7), 1);
+        player1 = new Player((AlienDemo.WIDTH / 10), (AlienDemo.HEIGHT / 7), 0);
+        player2 = new Player((AlienDemo.WIDTH - (AlienDemo.WIDTH / 5)), (AlienDemo.HEIGHT / 7), 1);
+        player1.setTexture();
+        player2.setTexture();
         currentPlayer = player1;
     }
 
