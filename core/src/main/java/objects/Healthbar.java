@@ -34,7 +34,7 @@ public class Healthbar {
         batch.draw(barHealthTexture, position.x, position.y, widthhealth,20);
     }
 
-    public void update(float deltaTime)
+    public void update()
     {
         if(widthhealth <= 0)
         {

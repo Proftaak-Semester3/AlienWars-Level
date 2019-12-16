@@ -26,10 +26,8 @@ public class PlayState extends State {
     private CollisionChecks collisionChecks;
     private CameraUpdate camUpdate;
     private OrthographicCamera cam;
-    private GameStateManager gsm;
     private iJsonCreator messageCreator;
     private boolean serverconfirm;
-    private boolean waiting;
     private boolean yourTurn;
     private int x1;
     private int x2;
@@ -91,8 +89,8 @@ public class PlayState extends State {
             handleInput();
 
             cam.update();
-            for (Bullets bullets : this.bullets) {
-                collisionChecks.checkCollision(bullets, turnHandler);
+            for (Bullets bullet : this.bullets) {
+                collisionChecks.checkCollision(bullet, turnHandler);
             }
             turnHandler.getPlayer1().update(dt);
             turnHandler.getPlayer2().update(dt);
@@ -114,10 +112,10 @@ public class PlayState extends State {
     private void removeBullets(float dt) {
         ArrayList<Bullets> bulletsToRemove = new ArrayList<>();
 
-        for (Bullets bullets : this.bullets) {
-            bullets.update(dt);
-            if (bullets.remove) {
-                bulletsToRemove.add(bullets);
+        for (Bullets bullet : this.bullets) {
+            bullet.update(dt);
+            if (bullet.isRemove()) {
+                bulletsToRemove.add(bullet);
             }
         }
 
@@ -136,9 +134,9 @@ public class PlayState extends State {
         sb.draw(turnHandler.getPlayer2().getTexture(), turnHandler.getPlayer2().getXPosition(), turnHandler.getPlayer2().getYPosition(), playerSize, playerSize * 1.8f);
         turnHandler.getPlayer1().getHealthbar().render(sb);
         turnHandler.getPlayer2().getHealthbar().render(sb);
-        for (Bullets bullets : this.bullets) {
-            bullets.setTexture();
-            bullets.render(sb);
+        for (Bullets bullet : this.bullets) {
+            bullet.setTexture();
+            bullet.render(sb);
         }
         sb.draw(textureship, (x1 - 60), (y1 - 20), 100, 10);
         sb.draw(textureship, (x2 - 60), (y2 - 20), 100, 10);

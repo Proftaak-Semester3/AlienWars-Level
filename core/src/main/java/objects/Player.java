@@ -54,7 +54,7 @@ public class Player {
 
     public void update(float deltaTime)
     {
-        if (position.x > Gdx.graphics.getWidth() || position.y < 0 || position.x < 0 || health <= 0) { isDead = true; }
+        checkDead();
         if(rect.collidesWith(ship))
         {
             onship = true;
@@ -62,23 +62,7 @@ public class Player {
         }
         if(hit)
         {
-            if (playerNumber == 0) {
-                if (velocity.x >= 0) {
-                    hit = false;
-                    velocity.x = 0;
-                } else {
-                    velocity.x = velocity.x + 1;
-                }
-            }
-            else
-            {
-                if (velocity.x <= 0) {
-                    hit = false;
-                    velocity.x = 0;
-                } else {
-                    velocity.x = velocity.x - 1;
-                }
-            }
+            bulletHit();
         }
         if(position.y > 0 && !onship){ velocity.add(0, GRAVITY,0); }
 
@@ -91,7 +75,7 @@ public class Player {
         if(playerNumber == 0) { rect.move((position.x - 60), position.y); }
         else { rect.move((position.x), position.y); }
 
-        healthbar.update(deltaTime);
+        healthbar.update();
 
         onship = false;
         healthbar.updatePosition(position);
@@ -108,4 +92,29 @@ public class Player {
     public Healthbar getHealthbar() { return  healthbar; }
     public void setHit(boolean hit) {  this.hit = hit;  }
     public boolean isDead() { return isDead; }
+
+    private void checkDead()
+    {
+        if (position.x > Gdx.graphics.getWidth() || position.y < 0 || position.x < 0 || health <= 0) { isDead = true; }
+    }
+    private void bulletHit()
+    {
+        if (playerNumber == 0) {
+            if (velocity.x >= 0) {
+                hit = false;
+                velocity.x = 0;
+            } else {
+                velocity.x = velocity.x + 1;
+            }
+        }
+        else
+        {
+            if (velocity.x <= 0) {
+                hit = false;
+                velocity.x = 0;
+            } else {
+                velocity.x = velocity.x - 1;
+            }
+        }
+    }
 }

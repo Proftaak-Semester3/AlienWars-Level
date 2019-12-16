@@ -46,7 +46,7 @@ public class QueueState extends State {
 
     @Override
     public void dispose() {
-
+        font.dispose();
     }
 
     public void setMatchFound(boolean matchFound) {
