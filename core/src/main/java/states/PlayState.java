@@ -91,6 +91,7 @@ public class PlayState extends State {
             cam.update();
             for (Bullets bullet : this.bullets) {
                 collisionChecks.checkCollision(bullet, turnHandler);
+                bullet.update(dt);
             }
             turnHandler.getPlayer1().update(dt);
             turnHandler.getPlayer2().update(dt);
@@ -113,7 +114,6 @@ public class PlayState extends State {
         ArrayList<Bullets> bulletsToRemove = new ArrayList<>();
 
         for (Bullets bullet : this.bullets) {
-            bullet.update(dt);
             if (bullet.isRemove()) {
                 bulletsToRemove.add(bullet);
             }
