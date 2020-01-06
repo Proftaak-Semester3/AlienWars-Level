@@ -15,6 +15,7 @@ import render.AlienDemo;
 import websockets.messageCreator.iJsonCreator;
 import websockets.messageSender.MessageBroadcaster;
 
+import java.io.Console;
 import java.util.ArrayList;
 
 public class PlayState extends State {
@@ -85,13 +86,17 @@ public class PlayState extends State {
 
     @Override
     public void update(float dt) {
+        System.out.println("update start");
         if (serverconfirm) {
+            System.out.println("handle input started");
             handleInput();
-
+            System.out.println("camUpdate start");
             cam.update();
-            for (Bullets bullet : this.bullets) {
+            System.out.println("bulletupdate Start");
+            for (Bullets bullet : bullets) {
                 collisionChecks.checkCollision(bullet, turnHandler);
                 bullet.update(dt);
+                System.out.println("bulletupdate Done");
             }
             turnHandler.getPlayer1().update(dt);
             turnHandler.getPlayer2().update(dt);
@@ -108,6 +113,7 @@ public class PlayState extends State {
 
             removeBullets(dt);
         }
+        System.out.println("update done");
     }
 
     private void removeBullets(float dt) {
@@ -150,14 +156,18 @@ public class PlayState extends State {
 
     public void enemyMove(float x, float y, int horizontal, int vertical, boolean player1Turn) {
         bullets.add(new Bullets(x, y, horizontal, vertical, player1Turn));
+        System.out.println("bullet made");
         turnHandler.switchTurn();
+        System.out.println("turns switched");
     }
 
     public void confirmServer(boolean confirm) {
         if (!confirm) {
+            System.out.println("NotConfirmed");
             gsm.push(new MenuState(gsm));
         } else {
             serverconfirm = true;
+            System.out.println("Confirmed");
         }
     }
 }
