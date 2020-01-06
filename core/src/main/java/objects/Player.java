@@ -3,6 +3,7 @@ package objects;
 import bullet.CollisionRect;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 
 public class Player {
@@ -46,7 +47,7 @@ public class Player {
             rect = new CollisionRect(x, y, 60, 60);
             healthbar = new Healthbar((int)position.x, (int)(position.y + 100), health, number);
         }
-        ship = new Platform(rect.getCenter().x - (1.6f * shipScale) * (rect.getWidth() / 2), y - 62 * shipScale, (int)(100 * shipScale), (int)(81 * shipScale), "Platform.png");
+        ship = new Platform(rect.getCenter().x - (1.6f * shipScale) * (rect.getWidth() / 2), y - 80 * shipScale, (int)(100 * shipScale), (int)(81 * shipScale), "CorrectedPlatform.png");
     }
 
     public Texture getTexture() {
@@ -80,6 +81,10 @@ public class Player {
 
         onship = false;
         healthbar.updatePosition(position);
+    }
+
+    public void draw(SpriteBatch sb){
+        sb.draw(ship.getTexture(), ship.getXPosition(), ship.getYPosition(), 100 * shipScale, 81.4f * shipScale);
     }
 
     public float getXPosition() { return position.x; }
