@@ -3,6 +3,7 @@ package gameChecks;
 import bullet.Bullets;
 import bullet.TurnHandler;
 import com.badlogic.gdx.math.Vector3;
+import functions.MoveStandardPosition;
 
 public class CollisionChecks {
 
@@ -21,6 +22,7 @@ public class CollisionChecks {
             bullets.updateVelocity(bounced);
             turnHandler.getPlayer2().updateVelocity(playerspeed);
             turnHandler.getPlayer2().setHit(true);
+            turnHandler.getPlayer2().setMoving(true);
         }
         else if(turnHandler.getPlayer1().getCollisionRect().collidesWith(bullets.getCollisionRect()) && !bullets.isPlayer1turn() && !bullets.isHit())
         {
@@ -35,6 +37,7 @@ public class CollisionChecks {
             bullets.updateVelocity(bounced);
             turnHandler.getPlayer1().updateVelocity(playerspeed);
             turnHandler.getPlayer1().setHit(true);
+            turnHandler.getPlayer2().setMoving(true);
         }
     }
 }

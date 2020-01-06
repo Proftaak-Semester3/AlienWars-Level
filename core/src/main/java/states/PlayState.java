@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import functions.MoveStandardPosition;
 import gameChecks.CameraUpdate;
 import gameChecks.CollisionChecks;
 import gameChecks.PlayerBool;
@@ -30,6 +31,7 @@ public class PlayState extends State {
     private OrthographicCamera cam;
     private iJsonCreator messageCreator;
     private PlayerBool playerBool;
+    private MoveStandardPosition moveStandardPosition;
     private boolean serverconfirm;
     private boolean yourTurn;
     private int x1;
@@ -43,13 +45,14 @@ public class PlayState extends State {
 
     protected PlayState(GameStateManager gsm, boolean firstToFire, iJsonCreator messageCreator) {
         super(gsm);
-        this.collisionChecks = new CollisionChecks();
         this.camUpdate = new CameraUpdate();
         this.messageCreator = messageCreator;
         this.gsm = gsm;
         this.playerBool = new PlayerBool();
         serverconfirm = false;
         turnHandler = new TurnHandler();
+        this.collisionChecks = new CollisionChecks();
+        this.moveStandardPosition = new MoveStandardPosition(turnHandler);
         cam = new OrthographicCamera(AlienDemo.WIDTH / 1.5F, AlienDemo.HEIGHT / 1.5F);
         cam.update();
         bg = new Texture("melkweg.jpg");
@@ -77,9 +80,6 @@ public class PlayState extends State {
                 Vector3 convertedInputPosition = cam.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
                 if (bullets.isEmpty() && turnHandler.player1turn(playernumber)) {
                     MessageBroadcaster.broadcast(messageCreator.bulletMessage(currentPlayer.getXPosition(), currentPlayer.getYPosition(), (int) (convertedInputPosition.x - currentPlayer.getXPosition()), (int) (convertedInputPosition.y - currentPlayer.getYPosition()), yourTurn));
-                    try{ Thread.sleep(50);}
-                    catch (Exception e) { e.printStackTrace(); }
-                    turnHandler.switchTurn();
                 }
             }
         }
@@ -104,7 +104,16 @@ public class PlayState extends State {
             }
             turnHandler.getPlayer1().update(dt);
             turnHandler.getPlayer2().update(dt);
-
+            if(turnHandler.getPlayer1().isHit() && !turnHandler.getPlayer1().isMoving())
+            {
+                moveStandardPosition.updatePlayer(turnHandler.getPlayer1(), playerBool.playerbool(playernumber), turnHandler);
+                moveStandardPosition.run();
+            }
+            else if(turnHandler.getPlayer2().isHit() && !turnHandler.getPlayer2().isMoving())
+            {
+                moveStandardPosition.updatePlayer(turnHandler.getPlayer2(), playerBool.playerbool(playernumber), turnHandler);
+                moveStandardPosition.run();
+            }
             if (turnHandler.getPlayer1().isDead() || turnHandler.getPlayer2().isDead()) {
                 cam = new OrthographicCamera(AlienDemo.WIDTH, AlienDemo.HEIGHT);
                 cam.update();
