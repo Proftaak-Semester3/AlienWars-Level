@@ -14,6 +14,7 @@ public class Player {
 
     private Vector3 position;
     private Vector3 velocity;
+    private Vector3 originalPosition;
     private boolean isDead;
 
     private Platform ship;
@@ -22,6 +23,7 @@ public class Player {
     private int health;
     private boolean onship = false;
     private boolean hit = false;
+    private boolean moving = false;
 
     private CollisionRect rect;
 
@@ -31,6 +33,7 @@ public class Player {
     public Player(float x, float y, int number) {
         isDead = false;
         position = new Vector3(x, y, 0);
+        originalPosition = new Vector3(x, y, 0);
         playerNumber = number;
         velocity = new Vector3(0, 0, 0);
         health = 100;
@@ -91,9 +94,14 @@ public class Player {
     public int getHealth() { return health; }
     public void updateVelocity(Vector3 update) { velocity = update; }
     public Vector3 getPosition() { return position; }
+    public boolean isMoving() { return moving; }
+    public void setMoving(boolean moving) { this.moving = moving; }
+    public void setPosition(Vector3 position) { this.position = position; }
+    public Vector3 getOriginalPosition() { return originalPosition; }
     public CollisionRect getCollisionRect () { return rect; }
     public Healthbar getHealthbar() { return  healthbar; }
-    public void setHit(boolean hit) {  this.hit = hit;  }
+    public void setHit(boolean hit) {  this.hit = hit; }
+    public boolean isHit() { return hit; }
     public boolean isDead() { return isDead; }
     public Platform GetShip(){ return ship; }
     public void setTexture()
@@ -111,7 +119,7 @@ public class Player {
     {
         if (playerNumber == 0) {
             if (velocity.x >= 0) {
-                hit = false;
+                moving = false;
                 velocity.x = 0;
             } else {
                 velocity.x = velocity.x + 1;
@@ -120,7 +128,7 @@ public class Player {
         else
         {
             if (velocity.x <= 0) {
-                hit = false;
+                moving = false;
                 velocity.x = 0;
             } else {
                 velocity.x = velocity.x - 1;
