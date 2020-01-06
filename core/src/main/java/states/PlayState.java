@@ -1,5 +1,6 @@
 package states;
 
+import animation.WalkBackAnimation;
 import bullet.Bullets;
 import bullet.TurnHandler;
 import com.badlogic.gdx.Gdx;
@@ -29,6 +30,7 @@ public class PlayState extends State {
     private OrthographicCamera cam;
     private iJsonCreator messageCreator;
     private PlayerBool playerBool;
+    private WalkBackAnimation walkBackAnimation;
     private boolean serverconfirm;
     private boolean yourTurn;
     private int x1;
@@ -49,6 +51,7 @@ public class PlayState extends State {
         serverconfirm = false;
         turnHandler = new TurnHandler();
         this.collisionChecks = new CollisionChecks();
+        this.walkBackAnimation = new WalkBackAnimation(gsm, turnHandler);
         cam = new OrthographicCamera(AlienDemo.WIDTH / 1.5F, AlienDemo.HEIGHT / 1.5F);
         cam.update();
         bg = new Texture("melkweg.jpg");
@@ -76,9 +79,6 @@ public class PlayState extends State {
                 Vector3 convertedInputPosition = cam.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
                 if (bullets.isEmpty() && turnHandler.player1turn(playernumber)) {
                     MessageBroadcaster.broadcast(messageCreator.bulletMessage(currentPlayer.getXPosition(), currentPlayer.getYPosition(), (int) (convertedInputPosition.x - currentPlayer.getXPosition()), (int) (convertedInputPosition.y - currentPlayer.getYPosition()), yourTurn));
-                    try { Thread.sleep(50); }
-                    catch (Exception e) { e.printStackTrace(); }
-                    turnHandler.switchTurn();
                 }
             }
         }
@@ -95,6 +95,11 @@ public class PlayState extends State {
             for (Bullets bullet : bullets) {
                 collisionChecks.checkCollision(bullet, turnHandler);
                 bullet.update(dt);
+/*                if(bullet.isHit())
+                {
+                    turnHandler.switchTurn();
+                    System.out.println("bullet did hit - switch turn");
+                }*/
             }
             turnHandler.getPlayer1().update(dt);
             turnHandler.getPlayer2().update(dt);
@@ -109,6 +114,10 @@ public class PlayState extends State {
             }
 
             removeBullets(dt);
+
+            if (!turnHandler.getPlayer1().isMoving() && turnHandler.getPlayer1().isHit() || !turnHandler.getPlayer2().isMoving() && turnHandler.getPlayer2().isHit()) {
+                walkBackAnimation.update(dt);
+            }
         }
     }
 
@@ -118,6 +127,9 @@ public class PlayState extends State {
         for (Bullets bullet : this.bullets) {
             if (bullet.isRemove()) {
                 bulletsToRemove.add(bullet);
+                turnHandler.switchTurn();
+                System.out.println("bullet did not hit - switch turn");
+
             }
         }
 
@@ -152,10 +164,6 @@ public class PlayState extends State {
 
     public void enemyMove(float x, float y, int horizontal, int vertical, boolean player1Turn) {
         bullets.add(new Bullets(x, y, horizontal, vertical, player1Turn));
-        if(playerBool.playerbool(playernumber) != player1Turn)
-        {
-            turnHandler.switchTurn();
-        }
         System.out.println("bullet made");
     }
 

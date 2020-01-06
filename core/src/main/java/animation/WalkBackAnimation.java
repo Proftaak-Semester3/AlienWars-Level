@@ -11,7 +11,7 @@ public class WalkBackAnimation extends State {
     private TurnHandler turnHandler;
     private GameStateManager gsm;
 
-    protected WalkBackAnimation(GameStateManager gsm, TurnHandler turnHandler) {
+    public WalkBackAnimation(GameStateManager gsm, TurnHandler turnHandler) {
         super(gsm);
         this.turnHandler = turnHandler;
         this.gsm = gsm;
@@ -46,7 +46,9 @@ public class WalkBackAnimation extends State {
         else
         {
             turnHandler.getPlayer1().setInAnimation(false);
+            turnHandler.getPlayer1().setHit(false);
             turnHandler.getPlayer2().setInAnimation(false);
+            turnHandler.getPlayer2().setHit(false);
         }
     }
 
