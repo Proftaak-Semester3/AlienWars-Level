@@ -18,6 +18,10 @@ public class AccountResponse {
     public List<AccountDTO> getAccounts(){
         return accounts;
     }
+    public AccountDTO getaccountbyid(int id){
+        AccountDTO account = new AccountDTO();
+
+    }
 
     public void setAccounts(List<AccountDTO> accounts){
         this.accounts = accounts;
