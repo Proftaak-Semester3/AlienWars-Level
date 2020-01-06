@@ -44,7 +44,7 @@ public class Player {
             rect = new CollisionRect(x, y, 60, 60);
             healthbar = new Healthbar((int)position.x, (int)(position.y + 100), health, number);
         }
-        ship = new Platform(rect.getCenter().x - (1.6f * shipScale) * (rect.getWidth() / 2), y - 62 * shipScale, (int)(100 * shipScale), (int)(81 * shipScale), "Platform.png");
+        ship = new Platform(rect.getCenter().x - (1.6f * shipScale) * (rect.getWidth() / 2), y - 80 * shipScale, (int)(100 * shipScale), (int)(81 * shipScale), "CorrectedPlatform.png");
     }
 
     public Texture getTexture() {
