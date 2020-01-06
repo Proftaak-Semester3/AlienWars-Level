@@ -148,8 +148,8 @@ public class PlayState extends State {
             bullet.setTexture();
             bullet.render(sb);
         }
-        sb.draw(textureship, (x1 - 60), (y1 - 70), 100, 81.4f);
-        sb.draw(textureship, (x2 - 60), (y2 - 70), 100, 81.4f);
+        turnHandler.getPlayer1().draw(sb);
+        turnHandler.getPlayer2().draw(sb);
         sb.end();
     }
 
