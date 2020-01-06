@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import gameChecks.CameraUpdate;
 import gameChecks.CollisionChecks;
+import gameChecks.PlayerBool;
 import objects.Player;
 import render.AlienDemo;
 import websockets.messageCreator.iJsonCreator;
@@ -28,6 +29,7 @@ public class PlayState extends State {
     private CameraUpdate camUpdate;
     private OrthographicCamera cam;
     private iJsonCreator messageCreator;
+    private PlayerBool playerBool;
     private boolean serverconfirm;
     private boolean yourTurn;
     private int x1;
@@ -45,6 +47,7 @@ public class PlayState extends State {
         this.camUpdate = new CameraUpdate();
         this.messageCreator = messageCreator;
         this.gsm = gsm;
+        this.playerBool = new PlayerBool();
         serverconfirm = false;
         turnHandler = new TurnHandler();
         cam = new OrthographicCamera(AlienDemo.WIDTH / 1.5F, AlienDemo.HEIGHT / 1.5F);
@@ -73,8 +76,9 @@ public class PlayState extends State {
                 Player currentPlayer = turnHandler.getCurrentPlayer();
                 Vector3 convertedInputPosition = cam.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
                 if (bullets.isEmpty() && turnHandler.player1turn(playernumber)) {
-                    bullets.add(new Bullets(currentPlayer.getXPosition(), currentPlayer.getYPosition(), (int) (convertedInputPosition.x - currentPlayer.getXPosition()), (int) (convertedInputPosition.y - currentPlayer.getYPosition()), yourTurn));
                     MessageBroadcaster.broadcast(messageCreator.bulletMessage(currentPlayer.getXPosition(), currentPlayer.getYPosition(), (int) (convertedInputPosition.x - currentPlayer.getXPosition()), (int) (convertedInputPosition.y - currentPlayer.getYPosition()), yourTurn));
+                    try{ Thread.sleep(10);}
+                    catch (Exception e) { e.printStackTrace(); }
                     turnHandler.switchTurn();
                 }
             }
@@ -157,7 +161,10 @@ public class PlayState extends State {
     public void enemyMove(float x, float y, int horizontal, int vertical, boolean player1Turn) {
         bullets.add(new Bullets(x, y, horizontal, vertical, player1Turn));
         System.out.println("bullet made");
-        turnHandler.switchTurn();
+        if(playerBool.playerbool(playernumber) != player1Turn)
+        {
+            turnHandler.switchTurn();
+        }
         System.out.println("turns switched");
     }
 
