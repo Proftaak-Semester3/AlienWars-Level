@@ -15,7 +15,7 @@ public class Bullets {
     private boolean hit = false;
     private boolean player1turn;
 
-    private float velocityMultiplier = 3;
+    private float velocityMultiplier = 3f;
 
     private Texture texture;
 
