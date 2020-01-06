@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import render.AlienDemo;
 
@@ -102,15 +103,12 @@ public class MenuState extends State implements InputProcessor {
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
-        //  camera.update();
         ShapeRenderer shapeRenderer = new ShapeRenderer();
-        //shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+
         shapeRenderer.setColor(255, 0, 0, 1);
-        //shapeRenderer.line(0, 0, Gdx.input.getX(), Gdx.input.getY());
         shapeRenderer.line(0, 0, 500, 500);
 
-        //shapeRenderer.rect(x, y, width, height);
         shapeRenderer.end();
         return true;
     }

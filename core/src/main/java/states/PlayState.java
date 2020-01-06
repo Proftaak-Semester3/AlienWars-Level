@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import functions.MoveStandardPosition;
 import gameChecks.CameraUpdate;
@@ -162,6 +163,26 @@ public class PlayState extends State implements InputProcessor {
         turnHandler.getPlayer1().draw(sb);
         turnHandler.getPlayer2().draw(sb);
         sb.end();
+
+        renderTargetLine();
+    }
+
+    private void renderTargetLine(){
+        ShapeRenderer shapeRenderer = new ShapeRenderer();
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
+        shapeRenderer.setColor(255, 0, 0, 1);
+
+        int mouseX = Gdx.input.getX();
+        int mouseY = AlienDemo.HEIGHT - Gdx.input.getY();
+
+        Vector2 currentPlayerPosition = new Vector2(turnHandler.getCurrentPlayer().getXPosition(), turnHandler.getCurrentPlayer().getYPosition());
+        Vector2 originVector = new Vector2(currentPlayerPosition.x, currentPlayerPosition.y);
+        Vector2 targetVector = new Vector2(mouseX, mouseY);
+        targetVector.clamp(0, 300);
+        shapeRenderer.rectLine(originVector, targetVector, 5f);
+
+        shapeRenderer.end();
     }
 
     @Override
