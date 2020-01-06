@@ -3,7 +3,6 @@ package gameChecks;
 import bullet.Bullets;
 import bullet.TurnHandler;
 import com.badlogic.gdx.math.Vector3;
-import functions.MoveStandardPosition;
 
 public class CollisionChecks {
 

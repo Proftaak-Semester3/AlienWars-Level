@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
-import functions.MoveStandardPosition;
 import gameChecks.CameraUpdate;
 import gameChecks.CollisionChecks;
 import gameChecks.PlayerBool;
@@ -17,7 +16,6 @@ import render.AlienDemo;
 import websockets.messageCreator.iJsonCreator;
 import websockets.messageSender.MessageBroadcaster;
 
-import java.io.Console;
 import java.util.ArrayList;
 
 public class PlayState extends State {
@@ -31,7 +29,6 @@ public class PlayState extends State {
     private OrthographicCamera cam;
     private iJsonCreator messageCreator;
     private PlayerBool playerBool;
-    private MoveStandardPosition moveStandardPosition;
     private boolean serverconfirm;
     private boolean yourTurn;
     private int x1;
@@ -52,7 +49,6 @@ public class PlayState extends State {
         serverconfirm = false;
         turnHandler = new TurnHandler();
         this.collisionChecks = new CollisionChecks();
-        this.moveStandardPosition = new MoveStandardPosition(turnHandler);
         cam = new OrthographicCamera(AlienDemo.WIDTH / 1.5F, AlienDemo.HEIGHT / 1.5F);
         cam.update();
         bg = new Texture("melkweg.jpg");
@@ -90,30 +86,15 @@ public class PlayState extends State {
 
     @Override
     public void update(float dt) {
-        System.out.println("update start");
         if (serverconfirm) {
-            System.out.println("handle input started");
             handleInput();
-            System.out.println("camUpdate start");
             cam.update();
-            System.out.println("bulletupdate Start");
             for (Bullets bullet : bullets) {
                 collisionChecks.checkCollision(bullet, turnHandler);
                 bullet.update(dt);
-                System.out.println("bulletupdate Done");
             }
             turnHandler.getPlayer1().update(dt);
             turnHandler.getPlayer2().update(dt);
-            if(turnHandler.getPlayer1().isHit() && !turnHandler.getPlayer1().isMoving())
-            {
-                moveStandardPosition.updatePlayer(turnHandler.getPlayer1(), playerBool.playerbool(playernumber), turnHandler);
-                moveStandardPosition.run();
-            }
-            else if(turnHandler.getPlayer2().isHit() && !turnHandler.getPlayer2().isMoving())
-            {
-                moveStandardPosition.updatePlayer(turnHandler.getPlayer2(), playerBool.playerbool(playernumber), turnHandler);
-                moveStandardPosition.run();
-            }
             if (turnHandler.getPlayer1().isDead() || turnHandler.getPlayer2().isDead()) {
                 cam = new OrthographicCamera(AlienDemo.WIDTH, AlienDemo.HEIGHT);
                 cam.update();
@@ -126,7 +107,6 @@ public class PlayState extends State {
 
             removeBullets(dt);
         }
-        System.out.println("update done");
     }
 
     private void removeBullets(float dt) {
@@ -134,6 +114,11 @@ public class PlayState extends State {
 
         for (Bullets bullet : this.bullets) {
             if (bullet.isRemove()) {
+                if(!bullet.isHit())
+                {
+                    turnHandler.switchTurn();
+                    System.out.println("switched turns");
+                }
                 bulletsToRemove.add(bullet);
             }
         }
@@ -170,11 +155,6 @@ public class PlayState extends State {
     public void enemyMove(float x, float y, int horizontal, int vertical, boolean player1Turn) {
         bullets.add(new Bullets(x, y, horizontal, vertical, player1Turn));
         System.out.println("bullet made");
-        if(playerBool.playerbool(playernumber) != player1Turn)
-        {
-            turnHandler.switchTurn();
-        }
-        System.out.println("turns switched");
     }
 
     public void confirmServer(boolean confirm) {

@@ -9,7 +9,7 @@ public class  DesktopLauncher{
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = AlienDemo.WIDTH;
 		config.height = AlienDemo.HEIGHT;
-		config.fullscreen = true;
+		config.fullscreen = false;
 		config.title = AlienDemo.TITLE;
 		new LwjglApplication(new AlienDemo(), config);
 	}

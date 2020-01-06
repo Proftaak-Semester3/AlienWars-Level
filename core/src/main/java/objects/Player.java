@@ -24,6 +24,7 @@ public class Player {
     private boolean onship = false;
     private boolean hit = false;
     private boolean moving = false;
+    private boolean inAnimation = false;
 
     private CollisionRect rect;
 
@@ -103,6 +104,8 @@ public class Player {
     public void setHit(boolean hit) {  this.hit = hit; }
     public boolean isHit() { return hit; }
     public boolean isDead() { return isDead; }
+    public boolean isInAnimation() { return inAnimation; }
+    public void setInAnimation(boolean inAnimation) { this.inAnimation = inAnimation; }
     public Platform GetShip(){ return ship; }
     public void setTexture()
     {
