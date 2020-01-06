@@ -65,7 +65,7 @@ public class PlayState extends State {
         y1 = (int) turnHandler.getPlayer1().getYPosition();
         x2 = (int) turnHandler.getPlayer2().getXPosition();
         y2 = (int) turnHandler.getPlayer2().getYPosition();
-        MessageBroadcaster.broadcast(messageCreator.startPositionMessage(x1,y1,x2,y2));
+        MessageBroadcaster.broadcast(messageCreator.startPositionMessage(x1, y1, x2, y2));
     }
 
     @Override
@@ -76,11 +76,8 @@ public class PlayState extends State {
                 Vector3 convertedInputPosition = cam.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
                 if (bullets.isEmpty() && turnHandler.player1turn(playernumber)) {
                     MessageBroadcaster.broadcast(messageCreator.bulletMessage(currentPlayer.getXPosition(), currentPlayer.getYPosition(), (int) (convertedInputPosition.x - currentPlayer.getXPosition()), (int) (convertedInputPosition.y - currentPlayer.getYPosition()), yourTurn));
-                    try{
-                        Thread.sleep(50);
-                    }catch(Exception e){
-                        e.printStackTrace();
-                    }
+                    try { Thread.sleep(50); }
+                    catch (Exception e) { e.printStackTrace(); }
                     turnHandler.switchTurn();
                 }
             }
@@ -120,8 +117,7 @@ public class PlayState extends State {
 
         for (Bullets bullet : this.bullets) {
             if (bullet.isRemove()) {
-                if(!bullet.isHit())
-                {
+                if (!bullet.isHit()) {
                     turnHandler.switchTurn();
                     System.out.println("switched turns");
                 }
@@ -160,6 +156,10 @@ public class PlayState extends State {
 
     public void enemyMove(float x, float y, int horizontal, int vertical, boolean player1Turn) {
         bullets.add(new Bullets(x, y, horizontal, vertical, player1Turn));
+        if(playerBool.playerbool(playernumber) != player1Turn)
+        {
+            turnHandler.switchTurn();
+        }
         System.out.println("bullet made");
     }
 
