@@ -1,4 +1,4 @@
-package AlienWarsLogin;
+package loginClasses;
 
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetProvider;

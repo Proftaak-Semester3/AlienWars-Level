@@ -4,16 +4,15 @@ public class AccountDTO {
     private int accountID;
     private String username;
     private String password;
-    private String email;
+    private String emailRegister;
 
     public AccountDTO() {
     }
 
-    public AccountDTO(int accountID, String username, String password, String email) {
+    public AccountDTO(int accountID, String username, String password) {
         this.accountID = accountID;
         this.username = username;
         this.password = password;
-        this.email = email;
     }
 
     public String getUsername() {
@@ -24,7 +23,7 @@ public class AccountDTO {
         return password;
     }
 
-    public String getEmail() {return email; }
+    public String getEmailRegister() {return emailRegister; }
 
     public int getAccountID() {
         return accountID;

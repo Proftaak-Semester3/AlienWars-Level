@@ -1,4 +1,4 @@
-package Hashing;
+package loginClasses;
 
 import org.mindrot.jbcrypt.BCrypt;
 

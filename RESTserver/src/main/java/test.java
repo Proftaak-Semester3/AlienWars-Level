@@ -1,9 +1,8 @@
 import AlienWarsLogin.AlienwarsLogin;
-import Logic.UserLogic;
 
 public class test {
     public static void main(String[] args) {
-        UserLogic logic = new UserLogic();
-        logic.login("odin2001", "huts");
+        AlienwarsLogin login = new AlienwarsLogin();
+        login.register("odin2001", "huts", "huts@huts.nl");
     }
 }
