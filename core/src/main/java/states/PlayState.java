@@ -120,11 +120,6 @@ public class PlayState extends State {
 
         for (Bullets bullet : this.bullets) {
             if (bullet.isRemove()) {
-                if(!bullet.isHit())
-                {
-                    turnHandler.switchTurn();
-                    System.out.println("switched turns");
-                }
                 bulletsToRemove.add(bullet);
             }
         }
