@@ -1,6 +1,6 @@
 package states;
 
-import Render.AlienDemo;
+import render.AlienDemo;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
