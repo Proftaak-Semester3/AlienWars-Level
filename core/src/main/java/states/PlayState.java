@@ -77,7 +77,6 @@ public class PlayState extends State {
                 Vector3 convertedInputPosition = cam.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
                 if (bullets.isEmpty() && turnHandler.player1turn(playernumber)) {
                     MessageBroadcaster.broadcast(messageCreator.bulletMessage(currentPlayer.getXPosition(), currentPlayer.getYPosition(), (int) (convertedInputPosition.x - currentPlayer.getXPosition()), (int) (convertedInputPosition.y - currentPlayer.getYPosition()), yourTurn));
-                    turnHandler.switchTurn();
                 }
             }
         }
@@ -124,6 +123,7 @@ public class PlayState extends State {
         for (Bullets bullet : this.bullets) {
             if (bullet.isRemove()) {
                 bulletsToRemove.add(bullet);
+                turnHandler.switchTurn();
             }
         }
 
