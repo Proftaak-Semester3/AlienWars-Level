@@ -19,7 +19,8 @@ public class AccountResponse {
         return accounts;
     }
     public AccountDTO getaccountbyid(int id){
-        accounts.stream()
+        AccountDTO account = new AccountDTO();
+
     }
 
     public void setAccounts(List<AccountDTO> accounts){
