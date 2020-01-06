@@ -24,6 +24,7 @@ public class LoginState extends State {
     private TextField txtUsername;
     private TextField txtPassword;
     private Button loginBtn;
+    private Button registerStateBtn;
     private Skin skin = new Skin(Gdx.files.internal("flat-earth-ui.json"));
 
     public LoginState(GameStateManager gsm) {
@@ -36,6 +37,7 @@ public class LoginState extends State {
 
     private void createCanvas(){
         skin.getFont("font").getData().setScale(1.33F);
+
         txtUsername = new TextField("", skin);
         txtUsername.setSize(250, 40);
         txtUsername.setPosition(AlienDemo.WIDTH /2F - (txtUsername.getWidth()/2f), AlienDemo.HEIGHT/2F - (txtUsername.getHeight()/2f));
@@ -44,6 +46,9 @@ public class LoginState extends State {
         txtPassword = new TextField("", skin);
         txtPassword.setSize(250, 40);
         txtPassword.setPosition(AlienDemo.WIDTH /2F - (txtPassword.getWidth()/2f), AlienDemo.HEIGHT/2F - (txtPassword.getHeight()/2f) -60);
+        txtPassword.setMessageText("Password");
+        txtPassword.setPasswordCharacter('*');
+        txtPassword.setPasswordMode(true);
         stage.addActor(txtPassword);
         loginBtn = new TextButton("Login", skin);
         loginBtn.setPosition(AlienDemo.WIDTH /2F - (loginBtn.getWidth()/2f), AlienDemo.HEIGHT/2F - (loginBtn.getHeight()/2f) - 120);
@@ -55,6 +60,16 @@ public class LoginState extends State {
             }
         });
         stage.addActor(loginBtn);
+        registerStateBtn = new TextButton("Register", skin);
+        registerStateBtn.setPosition(AlienDemo.WIDTH /2F - (registerStateBtn.getWidth()/2f), AlienDemo.HEIGHT/2F - (registerStateBtn.getHeight()/2f) - 180);
+        registerStateBtn.addListener(new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent event, Actor actor) {
+                        gsm.push(new RegisterState(gsm));
+
+            }
+        });
+        stage.addActor(registerStateBtn);
     }
 
     @Override
