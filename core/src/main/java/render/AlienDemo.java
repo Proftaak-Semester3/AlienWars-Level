@@ -4,10 +4,13 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import states.GameStateManager;
 import states.LoginState;
 import states.MenuState;
 import states.RegisterState;
+
 
 public class AlienDemo extends ApplicationAdapter {
     public static final int WIDTH = 1920;
@@ -25,6 +28,7 @@ public class AlienDemo extends ApplicationAdapter {
         gsm = new GameStateManager();
         Gdx.gl.glClearColor(1,0,0,1);
         gsm.push(new MenuState(gsm));
+
     }
 
     @Override
