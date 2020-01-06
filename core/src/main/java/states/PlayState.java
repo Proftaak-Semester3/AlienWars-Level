@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import gameChecks.CameraUpdate;
 import gameChecks.CollisionChecks;
+import gameChecks.PlayerBool;
 import objects.Player;
 import render.AlienDemo;
 import websockets.messageCreator.iJsonCreator;
@@ -28,6 +29,7 @@ public class PlayState extends State {
     private CameraUpdate camUpdate;
     private OrthographicCamera cam;
     private iJsonCreator messageCreator;
+    private PlayerBool playerBool;
     private boolean serverconfirm;
     private boolean yourTurn;
     private int x1;
@@ -45,6 +47,7 @@ public class PlayState extends State {
         this.camUpdate = new CameraUpdate();
         this.messageCreator = messageCreator;
         this.gsm = gsm;
+        this.playerBool = new PlayerBool();
         serverconfirm = false;
         turnHandler = new TurnHandler();
         cam = new OrthographicCamera(AlienDemo.WIDTH / 1.5F, AlienDemo.HEIGHT / 1.5F);
@@ -156,7 +159,7 @@ public class PlayState extends State {
     public void enemyMove(float x, float y, int horizontal, int vertical, boolean player1Turn) {
         bullets.add(new Bullets(x, y, horizontal, vertical, player1Turn));
         System.out.println("bullet made");
-        if(playernumber == 1 && !player1Turn)
+        if(playerBool.playerbool(playernumber) == player1Turn)
         {
             turnHandler.switchTurn();
         }
