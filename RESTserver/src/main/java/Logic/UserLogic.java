@@ -6,7 +6,7 @@ import Repositories.UserRepository;
 import restShared.AccountDTO;
 
 public class UserLogic {
-    UserRepo repo = new UserRepo();
+    private UserRepository repo = new UserRepo();
 
     public boolean login(String username, String password){
         AccountDTO accountDTO = repo.getUserByUserName(username);
