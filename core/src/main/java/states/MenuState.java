@@ -2,14 +2,16 @@ package states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import render.AlienDemo;
 
 
-public class MenuState extends State{
+public class MenuState extends State implements InputProcessor {
     private Texture background;
     private Texture playBtn;
     private OrthographicCamera cam;
@@ -57,4 +59,65 @@ public class MenuState extends State{
         background.dispose();
         playBtn.dispose();
     }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        //  camera.update();
+        ShapeRenderer shapeRenderer = new ShapeRenderer();
+        //shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(255, 0, 0, 1);
+        //shapeRenderer.line(0, 0, Gdx.input.getX(), Gdx.input.getY());
+        shapeRenderer.line(0, 0, 500, 500);
+
+        //shapeRenderer.rect(x, y, width, height);
+        shapeRenderer.end();
+        return true;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        //  camera.update();
+        ShapeRenderer shapeRenderer = new ShapeRenderer();
+        //shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(255, 0, 0, 1);
+        //shapeRenderer.line(0, 0, Gdx.input.getX(), Gdx.input.getY());
+        shapeRenderer.line(0, 0, 500, 500);
+
+        //shapeRenderer.rect(x, y, width, height);
+        shapeRenderer.end();
+        return true;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
+    }
+
 }

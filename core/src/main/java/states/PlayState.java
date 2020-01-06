@@ -4,9 +4,11 @@ import bullet.Bullets;
 import bullet.TurnHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import functions.MoveStandardPosition;
 import gameChecks.CameraUpdate;
@@ -20,7 +22,7 @@ import websockets.messageSender.MessageBroadcaster;
 import java.io.Console;
 import java.util.ArrayList;
 
-public class PlayState extends State {
+public class PlayState extends State implements InputProcessor {
 
     Bullets currentBullet;
     private TurnHandler turnHandler;
@@ -185,5 +187,55 @@ public class PlayState extends State {
             serverconfirm = true;
             System.out.println("Confirmed");
         }
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        //  camera.update();
+        ShapeRenderer shapeRenderer = new ShapeRenderer();
+        //shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(255, 0, 0, 1);
+        //shapeRenderer.line(0, 0, Gdx.input.getX(), Gdx.input.getY());
+        shapeRenderer.line(0, 0, 500, 500);
+
+        //shapeRenderer.rect(x, y, width, height);
+        shapeRenderer.end();
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
     }
 }
