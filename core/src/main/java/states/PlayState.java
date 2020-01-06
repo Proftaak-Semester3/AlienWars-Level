@@ -156,7 +156,10 @@ public class PlayState extends State {
     public void enemyMove(float x, float y, int horizontal, int vertical, boolean player1Turn) {
         bullets.add(new Bullets(x, y, horizontal, vertical, player1Turn));
         System.out.println("bullet made");
-        turnHandler.switchTurn();
+        if(playernumber == 1 && !player1Turn)
+        {
+            turnHandler.switchTurn();
+        }
         System.out.println("turns switched");
     }
 
