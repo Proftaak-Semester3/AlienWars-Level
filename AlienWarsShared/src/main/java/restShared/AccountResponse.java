@@ -1,11 +1,16 @@
 package restShared;
 
-import java.util.List;
-
 public class AccountResponse {
     private boolean success;
+    private LoginViewModel account;
 
-    private List<AccountDTO> accounts;
+    public AccountResponse(boolean success, LoginViewModel account) {
+        this.success = success;
+        this.account = account;
+    }
+
+    public AccountResponse() {
+    }
 
     public boolean isSuccess() {
         return success;
@@ -15,15 +20,7 @@ public class AccountResponse {
         this.success = success;
     }
 
-    public List<AccountDTO> getAccounts(){
-        return accounts;
-    }
-    public AccountDTO getaccountbyid(int id){
-        AccountDTO account = new AccountDTO();
-
-    }
-
-    public void setAccounts(List<AccountDTO> accounts){
-        this.accounts = accounts;
+    public LoginViewModel getAccount() {
+        return account;
     }
 }
