@@ -62,6 +62,11 @@ project(":core") {
         compile group: 'org.glassfish.tyrus.bundles', name: 'tyrus-standalone-client', version: '1.9'
         compile group: 'org.json', name: 'json', version: '20090211'
         testCompile "junit:junit:$junitVersion"
+        // https://mvnrepository.com/artifact/com.google.code.gson/gson
+        compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
+        // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
+        compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.10'
+
 
     }
 
