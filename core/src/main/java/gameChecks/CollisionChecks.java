@@ -32,11 +32,11 @@ public class CollisionChecks {
             bounced.y = (Math.round(bullets.getVelocity().y / 2) - 50);
             bounced.z = bullets.getVelocity().z;
             Vector3 playerspeed = bounced;
-            playerspeed.x = bullets.getVelocity().x / 10;
+            playerspeed.x = bullets.getVelocity().x / 8;
             bullets.updateVelocity(bounced);
             turnHandler.getPlayer1().updateVelocity(playerspeed);
             turnHandler.getPlayer1().setHit(true);
-            turnHandler.getPlayer2().setMoving(true);
+            turnHandler.getPlayer1().setMoving(true);
         }
     }
 }
