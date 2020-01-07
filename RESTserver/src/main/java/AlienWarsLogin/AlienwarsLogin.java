@@ -1,8 +1,7 @@
 package AlienWarsLogin;
 
-import loginClasses.DbClass;
-import loginClasses.HashingClass;
 import restShared.AccountDTO;
+import Hashing.HashingClass;
 
 import javax.sql.rowset.CachedRowSet;
 import java.sql.SQLException;
@@ -15,60 +14,54 @@ public class AlienwarsLogin {
 
     private DbClass dbClass = new DbClass();
 
-    public boolean register(String userName, String password, String email){
-        try{
+    public boolean addAccount(String userName, String password, String email) {
+        try {
             String hashedPassword = HashingClass.hashPassword(password);
             Map<Integer, Object> map = new HashMap<Integer, Object>();
             map.put(1, userName);
             map.put(2, hashedPassword);
             map.put(3, email);
             String procedure = "INSERT INTO [dbo].[User] (userName, password, email) VALUES(?,?,?)";
-
             dbClass.executeNonQuery(procedure, map);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
 
-    public boolean login(String userName, String inputPassword){
-        String procedure = "SELECT userName, password FROM [dbo].[User] WHERE userName = ?";
-        if(userName.contains("@"))
+    public AccountDTO getUserByUserName(String userName) {
+        String procedure = "SELECT uId, userName, password, email FROM [dbo].[User] WHERE userName = ?";
+        if (userName.contains("@"))
             procedure = "SELECT email, password FROM [dbo].[User] WHERE email = ?";
         Map<Integer, Object> map = new HashMap<Integer, Object>();
         map.put(1, userName);
-        try{
+        try {
             CachedRowSet cachedRowSet = dbClass.executeQuery(procedure, map);
-            if(cachedRowSet.next()){
-                return HashingClass.checkPassword(inputPassword,cachedRowSet.getString("password"));
+            if (cachedRowSet.next()) {
+                return new AccountDTO(cachedRowSet.getInt(1), cachedRowSet.getString(2), cachedRowSet.getString(3), cachedRowSet.getString(4));
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return null;
     }
 
-    public List<AccountDTO> getAll(){
-        String procedure = "SELECT * FROM [dbo].[User]";
+    public List<AccountDTO> getAll() {
+        String procedure = "SELECT uId, userName, password, email FROM [dbo].[User]";
         List<AccountDTO> accounts = new ArrayList<>();
         Map<Integer, Object> map = new HashMap<Integer, Object>();
-        try{
+        try {
             CachedRowSet cachedRowSet = dbClass.executeQuery(procedure, map);
-            while (cachedRowSet.next()){
-                accounts.add(new AccountDTO(cachedRowSet.getInt("userId"),
+            while (cachedRowSet.next()) {
+                accounts.add(new AccountDTO(
+                        cachedRowSet.getInt("userId"),
                         cachedRowSet.getString("userName"),
-                        cachedRowSet.getString("password")));
+                        cachedRowSet.getString("password"),
+                        cachedRowSet.getString("email")));
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return accounts;
     }
-
-    public boolean doesAccountExist() {
-        //TODO
-        return false;
-    }
-
-
 }

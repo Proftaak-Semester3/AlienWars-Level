@@ -1,8 +1,9 @@
 
 import AlienWarsLogin.AlienwarsLogin;
-import restShared.AccountDTO;
+import Logic.UserLogic;
+import restShared.LoginViewModel;
+import restShared.RegisterViewModel;
 
-import javax.print.attribute.standard.Media;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -13,18 +14,18 @@ import javax.ws.rs.core.Response;
 @Path("/auth")
 public class AlienWarsRESTservice {
 
-    private AlienwarsLogin alienWarsLogin;
+    private UserLogic userLogic;
 
     public AlienWarsRESTservice() {
-        alienWarsLogin = new AlienwarsLogin();
+        userLogic = new UserLogic();
     }
 
     @POST
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response login(AccountDTO accountDTO){
-        if(alienWarsLogin.login(accountDTO.getUsername(), accountDTO.getPassword())){
+    public Response login(LoginViewModel loginViewModel){
+        if(userLogic.login(loginViewModel.getUsername(), loginViewModel.getPassword())){
             return Response.status(200).entity(RestResponseHelper.getSuccesResponse()).build();
         }
         return Response.status(400).entity(RestResponseHelper.getErrorResponseString()).build();
@@ -34,8 +35,8 @@ public class AlienWarsRESTservice {
     @Path("/register")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response register(AccountDTO accountDTO){
-        if(alienWarsLogin.register(accountDTO.getUsername(),accountDTO.getPassword(), accountDTO.getEmailRegister())){
+    public Response register(RegisterViewModel registerViewModel){
+        if(userLogic.register(registerViewModel.getUsername(), registerViewModel.getEmail(), registerViewModel.getPassword(), registerViewModel.getPasswordCheck())){
             return Response.status(200).entity(RestResponseHelper.getSuccesResponse()).build();
         }else
             return Response.status(500).entity(RestResponseHelper.getErrorResponseString()).build();
