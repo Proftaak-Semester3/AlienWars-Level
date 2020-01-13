@@ -54,7 +54,7 @@ public class PlayState extends State {
         this.walkBackAnimation = new WalkBackAnimation(gsm, turnHandler);
         cam = new OrthographicCamera(AlienDemo.WIDTH / 1.5F, AlienDemo.HEIGHT / 1.5F);
         cam.update();
-        bg = new Texture("melkweg.jpg");
+        bg = new Texture("Alien wars playfield background.png");
         textureship = new Texture("Platform.png");
         bullets = new ArrayList<>();
         if (firstToFire) {

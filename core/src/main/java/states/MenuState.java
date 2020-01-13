@@ -17,7 +17,7 @@ public class MenuState extends State{
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
-        background = new Texture("sea.jpg");
+        background = new Texture("Alien Wars Background.png");
         playBtn = new Texture("playBtn.png");
         cam = new OrthographicCamera(AlienDemo.WIDTH , AlienDemo.HEIGHT);
         cam.update();
