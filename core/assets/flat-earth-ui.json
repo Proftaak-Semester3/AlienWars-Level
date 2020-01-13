@@ -18,9 +18,9 @@ com.badlogic.gdx.graphics.Color: {
 		a: 1
 	}
 	color: {
-		r: 0.3372549
-		g: 0.8
-		b: 0.44705883
+		r: 0
+		g: 0
+		b: 0
 		a: 1
 	},
 	colorHuts: {
@@ -36,9 +36,9 @@ com.badlogic.gdx.graphics.Color: {
 		a: 1
 	}
 	highlight: {
-		r: 0.42156863
-		g: 1
-		b: 0.5552286
+		r: 0.5
+		g: 0.5
+		b: 0.5
 		a: 1
 	}
 	pressed: {
@@ -428,7 +428,7 @@ com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: {
 		font: font
 		fontColor: black
-		background: textfield-c
+		background: textfield-huts
 		cursor: white
 		selection: selection,
 		messageFontColor: white

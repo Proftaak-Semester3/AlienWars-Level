@@ -31,7 +31,7 @@ public class RegisterState extends State {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         createCanvas();
-        background = new Texture("sea.jpg");
+        background = new Texture("Alien wars playfield background.png");
     }
 
     private void createCanvas(){

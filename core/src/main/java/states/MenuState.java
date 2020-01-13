@@ -27,7 +27,7 @@ public class MenuState extends State{
     public void handleInput() {
         if(Gdx.input.isTouched())
         {
-            gsm.set(new QueueState(gsm));
+            gsm.set(new LoginState(gsm));
             dispose();
         }
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE))
@@ -48,7 +48,7 @@ public class MenuState extends State{
         cam.update();
         sb.setProjectionMatrix(cam.combined);
         sb.draw(background, 0 , 0, AlienDemo.WIDTH, AlienDemo.HEIGHT);
-        sb.draw(playBtn, ((AlienDemo.WIDTH / 2) - (playBtn.getWidth() / 2)), (AlienDemo.HEIGHT / 2));
+        sb.draw(playBtn, ((AlienDemo.WIDTH / 2) - (playBtn.getWidth() / 2)), (AlienDemo.HEIGHT / 2) + 100);
         sb.end();
     }
 
