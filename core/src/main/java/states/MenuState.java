@@ -27,7 +27,7 @@ public class MenuState extends State{
     public void handleInput() {
         if(Gdx.input.isTouched())
         {
-            gsm.set(new QueueState(gsm));
+            gsm.set(new LoginState(gsm));
             dispose();
         }
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE))
