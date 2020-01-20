@@ -64,7 +64,11 @@ project(":core") {
         testCompile "junit:junit:$junitVersion"
         compile 'org.apache.httpcomponents:httpclient:4.5.10'
         compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
+        testCompile "org.mockito:mockito-core:2.2.29"
+        testImplementation 'org.junit.platform:junit-platform-commons:1.5.2'
+        testCompile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        testCompile "com.badlogicgames.gdx:gdx:$gdxVersion"
+        testCompile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         implementation project(":AlienWarsShared")
     }
-
 }

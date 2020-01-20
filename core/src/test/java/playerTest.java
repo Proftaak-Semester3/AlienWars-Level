@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector3;
 public class playerTest {
     @Before
     public void init(){
-        System.out.println("Starting Bullet test");
+        System.out.println("Starting bullet test");
         Vector3 position = new Vector3();
         position.x = 10;
     }

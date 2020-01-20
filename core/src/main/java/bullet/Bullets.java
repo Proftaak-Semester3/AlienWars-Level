@@ -54,7 +54,7 @@ public class Bullets {
 
         velocity.scl(1/deltaTime);
 
-        if(position.y > Gdx.graphics.getHeight() || position.x > Gdx.graphics.getWidth() || position.x < 0 || position.y < -20)
+        if(position.y > 1080 || position.x > 1920 || position.x < 0 || position.y < -20)
         {
             remove = true;
         }

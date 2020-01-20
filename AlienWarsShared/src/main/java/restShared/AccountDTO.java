@@ -1,6 +1,7 @@
 package restShared;
 
 public class AccountDTO {
+
     private int accountID;
     private String username;
     private String password;

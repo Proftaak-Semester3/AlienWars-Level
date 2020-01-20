@@ -15,7 +15,6 @@ public class LoginViewModel implements AccountModel {
     public String getUsername() {
         return username;
     }
-
     public String getPassword() {
         return password;
     }
