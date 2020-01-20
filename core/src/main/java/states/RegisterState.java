@@ -1,5 +1,6 @@
 package states;
 
+import HttpCall.AuthenticationRequest;
 import render.AlienDemo;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -16,6 +17,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class RegisterState extends State {
 
+    private AuthenticationRequest authenticationRequest = new AuthenticationRequest();
     private Texture background;
     private Stage stage;
     private TextField txtUsername;
@@ -70,7 +72,10 @@ public class RegisterState extends State {
         registerStateBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                gsm.push(new RegisterState(gsm));
+                boolean succes = authenticationRequest.register(txtEmail.getText(), txtUsername.getText(), txtPassword.getText(), txtPasswordCheck.getMessageText());
+                if(succes){
+                    gsm.push(new LoginState(gsm));
+                }
             }
         });
         stage.addActor(registerStateBtn);
