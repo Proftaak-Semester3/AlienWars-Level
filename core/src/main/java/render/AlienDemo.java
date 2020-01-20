@@ -5,9 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import states.GameStateManager;
-import states.LoginState;
 import states.MenuState;
-import states.RegisterState;
 
 public class AlienDemo extends ApplicationAdapter {
     public static final int WIDTH = 1920;
