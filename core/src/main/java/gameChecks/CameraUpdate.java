@@ -6,10 +6,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import render.AlienDemo;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class CameraUpdate {
-    public void cameraUpdate(OrthographicCamera cam, TurnHandler turnHandler, ArrayList<Bullets> bullets)
+    public void cameraUpdate(OrthographicCamera cam, TurnHandler turnHandler, List<Bullets> bullets)
     {
         Vector3 camPosition = new Vector3();
 
