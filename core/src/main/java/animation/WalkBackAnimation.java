@@ -9,7 +9,6 @@ import states.State;
 public class WalkBackAnimation extends State {
 
     private TurnHandler turnHandler;
-    private GameStateManager gsm;
 
     public WalkBackAnimation(GameStateManager gsm, TurnHandler turnHandler) {
         super(gsm);
