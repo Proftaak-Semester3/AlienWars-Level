@@ -22,8 +22,8 @@ public class CollisionRect {
     }
 
     public void setCenter(Vector2 newCenter){
-        x = newCenter.x - width / 2;
-        y = newCenter.y - height / 2;
+        x = newCenter.x - (int)((double)width / 2d);
+        y = newCenter.y - (int)((double)height / 2d);
         center = newCenter;
     }
 
@@ -34,7 +34,7 @@ public class CollisionRect {
         this.width = width;
         this.height = height;
 
-        center = new Vector2(x + width / 2, y + height / 2);
+        center = new Vector2(x + (int)((double)width / 2d), y + (int)((double)height / 2d));
     }
 
     public void move (float x, float y)
