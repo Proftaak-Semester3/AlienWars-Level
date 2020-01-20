@@ -44,11 +44,11 @@ public class MenuState extends State{
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
-        cam.position.set(new Vector3((float)((double)AlienDemo.WIDTH / 2), (AlienDemo.HEIGHT / 2), 0));
+        cam.position.set(new Vector3((float)((float)AlienDemo.WIDTH / 2d), ((int)((float)AlienDemo.HEIGHT / 2d)), 0));
         cam.update();
         sb.setProjectionMatrix(cam.combined);
         sb.draw(background, 0 , 0, AlienDemo.WIDTH, AlienDemo.HEIGHT);
-        sb.draw(playBtn, ((AlienDemo.WIDTH / 2) - (playBtn.getWidth() / 2)), (AlienDemo.HEIGHT / 2) + 100);
+        sb.draw(playBtn, (((int)((float)AlienDemo.WIDTH / 2d)) - ((int)((float)playBtn.getWidth() / 2d))), ((int)((float)AlienDemo.HEIGHT / 2d)) + 100);
         sb.end();
     }
 
