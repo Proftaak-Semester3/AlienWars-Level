@@ -39,7 +39,7 @@ public class LoginState extends State {
 
         wrongPassword = new Label("Wrong Username/Password", skin);
         wrongPassword.setSize(250, 40);
-        wrongPassword.setPosition(AlienDemo.WIDTH /2F - (registerStateBtn.getWidth()/2f), AlienDemo.HEIGHT/2F - (registerStateBtn.getHeight()/2f) - 240);
+        wrongPassword.setPosition(AlienDemo.WIDTH /2F - (wrongPassword.getWidth()/2f), AlienDemo.HEIGHT/2F - (wrongPassword.getHeight()/2f) - 240);
 
         txtUsername = new TextField("", skin);
         txtUsername.setSize(250, 40);
