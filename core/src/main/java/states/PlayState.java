@@ -1,5 +1,6 @@
 package states;
 
+import animation.RandomObstacle;
 import animation.WalkBackAnimation;
 import bullet.Bullets;
 import bullet.TurnHandler;
@@ -28,6 +29,7 @@ public class PlayState extends State {
     private OrthographicCamera cam;
     private iJsonCreator messageCreator;
     private WalkBackAnimation walkBackAnimation;
+    private RandomObstacle obstacle;
     private boolean serverconfirm;
     private boolean yourTurn;
     private int x1;
@@ -52,6 +54,7 @@ public class PlayState extends State {
         cam.update();
         bg = new Texture("Alien wars playfield background.png");
         bullets = new ArrayList<>();
+        obstacle = new RandomObstacle(gsm);
         if (firstToFire) {
             playernumber = 0;
             yourTurn = true;
@@ -88,6 +91,7 @@ public class PlayState extends State {
             for (Bullets bullet : bullets) {
                 collisionChecks.checkCollision(bullet, turnHandler);
                 bullet.update(dt);
+                obstacle.updateBullet(bullet);
 /*                if(bullet.isHit())
                 {
                     turnHandler.switchTurn();
@@ -120,8 +124,8 @@ public class PlayState extends State {
         for (Bullets bullet : this.bullets) {
             if (bullet.isRemove()) {
                 bulletsToRemove.add(bullet);
+                obstacle.nextTurn();
                 turnHandler.switchTurn();
-
             }
         }
 
@@ -146,6 +150,7 @@ public class PlayState extends State {
         }
         turnHandler.getPlayer1().draw(sb);
         turnHandler.getPlayer2().draw(sb);
+        obstacle.render(sb);
         sb.end();
     }
 

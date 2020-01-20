@@ -85,4 +85,7 @@ public class Bullets {
         }
     }
     public boolean isRemove() { return remove; }
+    public void setPosition(Vector3 position) {
+        this.position = position;
+    }
 }
