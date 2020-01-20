@@ -16,7 +16,6 @@ import java.io.UnsupportedEncodingException;
 public class AuthenticationRequest {
     private final String url = "http://localhost:1234/auth";
     private final Gson gson = new Gson();
-    private final int NOTDEFINED = -1;
 
     public boolean login(String user, String password){
         LoginViewModel loginViewModel = new LoginViewModel(user, password);

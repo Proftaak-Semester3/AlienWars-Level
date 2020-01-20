@@ -40,7 +40,8 @@ public class LoginState extends State {
         wrongPassword = new Label("Wrong Username/Password", skin);
         wrongPassword.setSize(250, 40);
         wrongPassword.setPosition(AlienDemo.WIDTH /2F - (wrongPassword.getWidth()/2f), AlienDemo.HEIGHT/2F - (wrongPassword.getHeight()/2f) - 240);
-
+        wrongPassword.setVisible(false);
+        stage.addActor(wrongPassword);
         txtUsername = new TextField("", skin);
         txtUsername.setSize(250, 40);
         txtUsername.setPosition(AlienDemo.WIDTH /2F - (txtUsername.getWidth()/2f), AlienDemo.HEIGHT/2F - (txtUsername.getHeight()/2f));
@@ -61,6 +62,8 @@ public class LoginState extends State {
                 boolean succes = authenticationRequest.login(txtUsername.getText(), txtPassword.getText());
                 if(succes){
                     gsm.push(new QueueState(gsm));
+                }else {
+                    wrongPassword.setVisible(true);
                 }
             }
         });

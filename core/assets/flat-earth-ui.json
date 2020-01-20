@@ -23,6 +23,12 @@ com.badlogic.gdx.graphics.Color: {
 		b: 0
 		a: 1
 	},
+	red: {
+		r: 1
+		g: 0
+		b: 0
+		a: 1
+	},
 	colorHuts: {
 		r: 0
 		g: 0
@@ -33,7 +39,7 @@ com.badlogic.gdx.graphics.Color: {
 		r: 0.5
 		g: 0.5
 		b: 0.5
-		a: 1
+		a: 0.5
 	}
 	highlight: {
 		r: 0.5
@@ -45,7 +51,7 @@ com.badlogic.gdx.graphics.Color: {
 		r: 0.2529412
 		g: 0.6
 		b: 0.33313715
-		a: 1
+		a: 0.5
 	}
 	selection: {
 		r: 0.22745098
@@ -58,15 +64,19 @@ com.badlogic.gdx.graphics.Color: {
 		g: 1
 		b: 1
 		a: 1
-	}
+	},
 	window: {
 		r: 0.76862746
 		g: 0.4509804
 		b: 0
 		a: 1
 	}
-}
+},
 com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+	button-x: {
+		name: button
+		color: gray
+	}
 	button-c: {
 		name: button
 		color: color
@@ -255,7 +265,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 		name: radio-pressed
 		color: pressed
 	}
-}
+},
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 	default: {
 		up: button-c
@@ -327,7 +337,7 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
 		font: font
-		fontColor: color
+		fontColor: red
 	}
 	button: {
 		font: button
@@ -421,13 +431,13 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		overFontColor: gray
 		up: button-c
 		down: button-p
-		over: button-h
+		over: button-x
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: {
 		font: font
-		fontColor: black
+		fontColor: white
 		background: textfield-huts
 		cursor: white
 		selection: selection,
