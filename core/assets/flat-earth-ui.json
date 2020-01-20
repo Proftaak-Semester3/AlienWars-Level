@@ -23,6 +23,12 @@ com.badlogic.gdx.graphics.Color: {
 		b: 0
 		a: 1
 	},
+	red: {
+		r: 1
+		g: 0
+		b: 0
+		a: 1
+	},
 	colorHuts: {
 		r: 0
 		g: 0
@@ -65,7 +71,7 @@ com.badlogic.gdx.graphics.Color: {
 		b: 0
 		a: 1
 	}
-}
+},
 com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 	button-c: {
 		name: button
@@ -327,7 +333,7 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
 		font: font
-		fontColor: color
+		fontColor: red
 	}
 	button: {
 		font: button
