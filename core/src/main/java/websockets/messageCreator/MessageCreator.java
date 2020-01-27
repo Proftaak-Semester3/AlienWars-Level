@@ -51,4 +51,17 @@ public class MessageCreator implements iJsonCreator {
         }
         return json;
     }
+
+    @Override
+    public JSONObject winMessage() {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("task", "win");
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return json;
+    }
 }

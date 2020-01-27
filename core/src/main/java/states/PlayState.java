@@ -101,6 +101,7 @@ public class PlayState extends State {
             turnHandler.getPlayer1().update(dt);
             turnHandler.getPlayer2().update(dt);
             if (turnHandler.getPlayer1().isDead() || turnHandler.getPlayer2().isDead()) {
+                MessageBroadcaster.broadcast(messageCreator.winMessage());
                 cam = new OrthographicCamera(AlienDemo.WIDTH, AlienDemo.HEIGHT);
                 cam.update();
                 gsm.set(new MenuState(gsm));
@@ -169,5 +170,10 @@ public class PlayState extends State {
         } else {
             serverconfirm = true;
         }
+    }
+
+    public void win()
+    {
+        gsm.push(new QueueState(gsm));
     }
 }
