@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="BulletTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-11-04T13:10:51" hostname="MacBook-Pro-3.local" time="0.016">
+  <properties/>
+  <testcase name="justAnExample()" classname="BulletTests" time="0.016"/>
+  <system-out><![CDATA[This test method should be run
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
