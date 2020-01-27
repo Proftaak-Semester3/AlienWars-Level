@@ -166,7 +166,7 @@ public class PlayState extends State {
 
     public void confirmServer(boolean confirm) {
         if (!confirm) {
-            gsm.push(new QueueState(gsm));
+            gsm.push(new MenuState(gsm));
         } else {
             serverconfirm = true;
         }
